@@ -2,60 +2,8 @@
 
 # CCA-F 学習コース一覧
 
-全コースのレッスン内容を取得・Markdown化したもの。  
-ソース: <https://anthropic.skilljar.com/>
-
----
-
-## 試験概要（公式情報）
-
-**Claude Certified Architect – Foundations（CCA-F）**  
-公式トップページ: <https://anthropic.skilljar.com/claude-certified-architect-foundations-access-request>
-
-| 項目 | 内容 |
-|------|------|
-| 対象 | Anthropicパートナー企業の技術者（〜301レベル） |
-| 形式 | 60問・4択・120分・プロクター監視（ProctorFree） |
-| 合格ライン | 1000点満点中720点（目安：Practice Exam で 900+/1000） |
-| 受験料 | $99（Claude Partner Network 加盟企業は割引あり） |
-| 結果通知 | 受験から2営業日以内（ドメイン別スコアレポート付き） |
-| 合格特典 | CCA-Fバッジ（LinkedIn共有可） |
-| 試験回数 | 1回のみ（再受験不可） |
-| 受験登録 | パートナー企業のメールアドレスが必要 |
-
-**前提条件（公式）:**
-
-- Skilljarの200レベルコースをすべて完了していること
-- Agent SDK・Claude Code・Anthropic API・MCPでの実装経験があること
-
----
-
-## ドメイン別出題割合（公式）
-
-| ドメイン | 内容 | 割合 |
-|---------|------|------|
-| D1 | Agentic Architecture & Orchestration | **27%** |
-| D2 | Tool Design & MCP Integration | **18%** |
-| D3 | Claude Code Configuration & Workflows | **20%** |
-| D4 | Prompt Engineering & Structured Output | **20%** |
-| D5 | Context Management & Reliability | **15%** |
-
-> ※公式ページ（2026年6月時点）より。
-
----
-
-## 出題シナリオ（全6種・本番は4種をランダム抽出）
-
-| # | シナリオ名 | 関連ドメイン |
-|---|-----------|------------|
-| 1 | Customer Support Resolution Agent | D1・D2・D5 |
-| 2 | Code Generation with Claude Code | D3・D5 |
-| 3 | Multi-Agent Research System | D1・D2・D5 |
-| 4 | Developer Productivity with Claude | D2・D3・D1 |
-| 5 | Claude Code for Continuous Integration | D3・D4 |
-| 6 | Structured Data Extraction | D4・D5 |
-
-> 詳細は公式 Exam Guide PDF（パートナー登録後にダウンロード可）を参照。
+Anthropic Skilljar の全コースおよび公式ブログの試験対策まとめ。  
+試験概要・ドメイン構成・出題シナリオは [リポジトリ直下の README](../README.md) を参照。
 
 ---
 
@@ -100,51 +48,20 @@ D1（27%）＋ D2（18%）で合計45%。最重要フェーズ。
 | 10 | [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action) | 21 | D3 | [phase3-02-claude-code-action.md](phase3-02-claude-code-action.md) |
 | 11 | [Introduction to agent skills](https://anthropic.skilljar.com/introduction-to-agent-skills) | 6 | D3 | [phase3-03-agent-skills.md](phase3-03-agent-skills.md) |
 
----
-
 ### Phase 4 — 公式ブログ補強（約8〜10時間）
 
-コースでは不十分な4領域（最新 Agent SDK 設計・大量 MCP ツール時代の Tool Design・Context Engineering・安全設計）を公式ブログ・Docs で補強する。
+コースでは手薄な4領域（最新 Agent SDK 設計・大量 MCP ツール時代の Tool Design・Context Engineering・安全設計）を補強する。
 
 | # | 内容 | 対応ドメイン | 優先度 | ファイル |
 |---|------|------------|--------|--------|
-| 12 | [Building Agents with Claude Agent SDK](https://claude.com/blog/building-agents-with-the-claude-agent-sdk) | D1/D3/D5 | S | [12-building-agents-with-sdk.md](phase4/12-building-agents-with-sdk.md) |
-| 13 | [Writing Effective Tools for AI Agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | D2/D4 | S | [13-writing-effective-tools.md](phase4/13-writing-effective-tools.md) |
-| 14 | [Code Execution with MCP + Advanced Tool Use](https://www.anthropic.com/engineering/code-execution-with-mcp) | D2/D5 | S | [14-code-execution-mcp-advanced-tool-use.md](phase4/14-code-execution-mcp-advanced-tool-use.md) |
-| 15 | [Effective Context Engineering + Context Management](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | D5 | S | [15-context-engineering-and-management.md](phase4/15-context-engineering-and-management.md) |
-| 16 | [Claude Code 最新 Docs 補強（Memory/Rules/Skills/Hooks）](https://docs.anthropic.com/en/docs/claude-code/memory) | D3/D1 | S | [16-claude-code-latest-docs.md](phase4/16-claude-code-latest-docs.md) |
-| 17 | [Auto Mode + How We Contain Claude](https://www.anthropic.com/engineering/claude-code-auto-mode) | D3/D5 | A | [17-auto-mode-and-security.md](phase4/17-auto-mode-and-security.md) |
-| 18 | [Demystifying Evals for AI Agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) | D4/D5 | A | [18-demystifying-evals.md](phase4/18-demystifying-evals.md) |
-| 19 | [Effective Harnesses for Long-Running Agents + Agent Skills](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | D1/D5/D3 | A/B | [19-effective-harnesses-and-agent-skills.md](phase4/19-effective-harnesses-and-agent-skills.md) |
-
----
-
-## 合計: 11コース・216レッスン + Phase 4 補強記事
-
-| Phase | コース数 | レッスン数 |
-|-------|---------|-----------|
-| Phase 0 | 2 | 29 |
-| Phase 1 | 3 | 114 |
-| Phase 2 | 3 | 33 |
-| Phase 3 | 3 | 40 |
-| Phase 4 | 8記事 | — |
-| **合計** | **11コース + 8記事** | **216** |
-
----
-
-## ターゲット受験者像（公式）
-
-**ソリューションアーキテクト**として本番アプリケーションを設計・実装する人材。以下の実務経験が前提：
-
-- Claude Agent SDK によるエージェントアプリ構築（マルチエージェント・サブエージェント委譲・ツール統合・ライフサイクルフック）
-- CLAUDE.md・Agent Skills・MCP サーバー統合・プランモードを使った Claude Code チームワークフロー設定
-- バックエンドシステム統合のための MCP ツール・リソースインターフェース設計
-- JSON スキーマ・Few-shot 例・抽出パターンを活用した構造化出力プロンプト設計
-- 長文書・マルチターン・マルチエージェントハンドオフにわたるコンテキストウィンドウ管理
-- CI/CDパイプラインへのClaudeの統合（自動コードレビュー・テスト生成・PRフィードバック）
-- エラーハンドリング・Human-in-the-loop・自己評価パターンを含むエスカレーション設計
-
-> 実務経験目安：Claude APIs・Agent SDK・Claude Code・MCP での構築 **6ヶ月以上**
+| 12 | [Building Agents with Claude Agent SDK](https://claude.com/blog/building-agents-with-the-claude-agent-sdk) | D1/D3/D5 | S | [phase4/12-building-agents-with-sdk.md](phase4/12-building-agents-with-sdk.md) |
+| 13 | [Writing Effective Tools for AI Agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | D2/D4 | S | [phase4/13-writing-effective-tools.md](phase4/13-writing-effective-tools.md) |
+| 14 | [Code Execution with MCP + Advanced Tool Use](https://www.anthropic.com/engineering/code-execution-with-mcp) | D2/D5 | S | [phase4/14-code-execution-mcp-advanced-tool-use.md](phase4/14-code-execution-mcp-advanced-tool-use.md) |
+| 15 | [Effective Context Engineering + Context Management](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | D5 | S | [phase4/15-context-engineering-and-management.md](phase4/15-context-engineering-and-management.md) |
+| 16 | [Claude Code 最新 Docs 補強（Memory/Rules/Skills/Hooks）](https://docs.anthropic.com/en/docs/claude-code/memory) | D3/D1 | S | [phase4/16-claude-code-latest-docs.md](phase4/16-claude-code-latest-docs.md) |
+| 17 | [Auto Mode + How We Contain Claude](https://www.anthropic.com/engineering/claude-code-auto-mode) | D3/D5 | A | [phase4/17-auto-mode-and-security.md](phase4/17-auto-mode-and-security.md) |
+| 18 | [Demystifying Evals for AI Agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) | D4/D5 | A | [phase4/18-demystifying-evals.md](phase4/18-demystifying-evals.md) |
+| 19 | [Effective Harnesses for Long-Running Agents + Agent Skills](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | D1/D5/D3 | A/B | [phase4/19-effective-harnesses-and-agent-skills.md](phase4/19-effective-harnesses-and-agent-skills.md) |
 
 ---
 
