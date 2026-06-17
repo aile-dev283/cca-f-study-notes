@@ -43,6 +43,20 @@ CCA-F（Claude Certified Architect – Foundations）試験対策のノートを
 
 ---
 
+## upstream の更新を取り込む
+
+`docs/` は [ericbuess/claude-code-docs](https://github.com/ericbuess/claude-code-docs) から自動更新されているが、手動で最新を取り込む場合：
+
+```bash
+git fetch upstream
+git merge upstream/main
+git push
+```
+
+`cca-f/` は upstream に存在しないためコンフリクトは起きない。
+
+---
+
 ## Claude Code ドキュメントミラー
 
 `docs/` には [ericbuess/claude-code-docs](https://github.com/ericbuess/claude-code-docs) 由来の Claude Code 公式ドキュメントミラーが含まれる。GitHub Actions で定期自動更新。
