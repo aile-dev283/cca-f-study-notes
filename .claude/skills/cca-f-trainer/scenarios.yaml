@@ -1,0 +1,87 @@
+# CCA-F 6シナリオ原型
+# 出典: cca-f/CCA-F_Certification_Exam_Guide.md "Exam Scenarios"
+# 全問はいずれかのシナリオに包むこと（trivia 禁止）。本番は6本中4本がランダム選出される。
+# 横断モードでは複数シナリオから出題し、ドメイン集中モードでは primary_domains に該当するシナリオを優先する。
+
+scenarios:
+  S1:
+    name: Customer Support Resolution Agent
+    primary_domains: [D1, D2, D5]
+    context: >-
+      Claude Agent SDK で顧客サポートの解決エージェントを構築する。返品・請求の異議・アカウント問題など
+      曖昧性の高いリクエストを処理する。バックエンドにはカスタム MCP ツール（get_customer, lookup_order,
+      process_refund, escalate_to_human）でアクセスする。目標は初回接触解決率 80%+ を達成しつつ、
+      エスカレーションすべきタイミングを見極めること。
+    hooks_for_questions:
+      - "本人確認（get_customer）を返金（process_refund）の前提ゲートにする（プログラム的強制 1.4）"
+      - "似た説明文の get_customer / lookup_order による誤ルーティング（ツール説明 2.1）"
+      - "$500 超の返金をフックで遮断しエスカレーションへ（1.5）"
+      - "方針が沈黙する要求でのエスカレーション判断（5.2）"
+      - "case facts ブロックで金額・注文番号を保持（5.1）"
+
+  S2:
+    name: Code Generation with Claude Code
+    primary_domains: [D3, D5]
+    context: >-
+      Claude Code でソフトウェア開発を加速する。チームはコード生成・リファクタリング・デバッグ・
+      ドキュメント作成に使う。カスタムスラッシュコマンドや CLAUDE.md 設定で開発ワークフローに統合し、
+      プランモードと直接実行の使い分けを理解する必要がある。
+    hooks_for_questions:
+      - "チーム共有の /review コマンドをどこに置くか（.claude/commands 3.2）"
+      - "モノリス→マイクロサービス再構成でプランモードを選ぶ（3.4）"
+      - "コードベース横断のテスト規約を .claude/rules グロブで適用（3.3）"
+      - "新メンバーに設定が届かない＝user 階層の取り違え（3.1）"
+
+  S3:
+    name: Multi-Agent Research System
+    primary_domains: [D1, D2, D5]
+    context: >-
+      Claude Agent SDK でマルチエージェントのリサーチシステムを構築する。コーディネーターが専門
+      サブエージェントへ委任する（Web 検索 / 文書分析 / 統合 / レポート生成）。トピックを調査し、
+      引用付きの包括的レポートを生成する。
+    hooks_for_questions:
+      - "タスク分解が狭すぎてトピックを取りこぼす（1.2）"
+      - "サブエージェントへ前段の発見を明示的にプロンプト注入（自動継承しない 1.3）"
+      - "タイムアウト時の構造化エラー文脈で回復判断（5.3 / 2.2）"
+      - "統合エージェントに scoped な verify_fact だけ与える（最小権限 2.3）"
+      - "claim-source マッピングを統合まで保全（5.6）"
+
+  S4:
+    name: Developer Productivity with Claude
+    primary_domains: [D2, D3, D1]
+    context: >-
+      Claude Agent SDK で開発者生産性ツールを構築する。馴染みのないコードベース探索、レガシー理解、
+      ボイラープレート生成、反復作業の自動化を支援する。組み込みツール（Read, Write, Bash, Grep, Glob）を使い、
+      MCP サーバーと統合する。
+    hooks_for_questions:
+      - "関数の呼び出し元探索に Grep、ファイル種別検索に Glob（2.5）"
+      - "Edit が一意アンカーを見つけられない時 Read+Write にフォールバック（2.5）"
+      - "冗長な探索出力を Explore サブエージェントで隔離（3.4 / 5.4）"
+      - "MCP ツール説明を充実させ組み込み Grep より選ばせる（2.4）"
+
+  S5:
+    name: Claude Code for Continuous Integration
+    primary_domains: [D3, D4]
+    context: >-
+      Claude Code を CI/CD パイプラインに統合する。自動コードレビュー、テストケース生成、PR への
+      フィードバックを行う。実行可能なフィードバックを提供し、誤検知（false positive）を最小化する
+      プロンプトを設計する必要がある。
+    hooks_for_questions:
+      - "対話実行でハング → -p フラグ（3.6）"
+      - "--output-format json + --json-schema で機械可読な所見（3.6 / 4.3）"
+      - "pre-merge はリアルタイム / 夜間レポートは Batches API（4.5）"
+      - "14ファイルの単一パスレビューを分割（ファイル単位＋統合パス 4.6）"
+      - "「be conservative」でなく具体基準で誤検知削減（4.1）"
+
+  S6:
+    name: Structured Data Extraction
+    primary_domains: [D4, D5]
+    context: >-
+      Claude で構造化データ抽出システムを構築する。非構造化文書から情報を抽出し、JSON スキーマで出力を
+      検証し、高精度を維持する。エッジケースを適切に処理し、下流システムと統合できなければならない。
+    hooks_for_questions:
+      - "nullable フィールドで情報不在時の捏造を防ぐ（4.3）"
+      - "検証失敗時にエラーを添えて再試行、ただし情報不在には無効（4.4）"
+      - "varied フォーマットへの few-shot で空抽出を改善（4.2）"
+      - "100文書のバッチ、custom_id で失敗のみ再投入（4.5）"
+      - "フィールド単位確信度＋層化抽出で人間レビュー振り分け（5.5）"

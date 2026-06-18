@@ -1,0 +1,148 @@
+# CCA-F ブループリント: 5ドメイン × タスクステートメント網羅チェックリスト
+# 出典: cca-f/CCA-F_Certification_Exam_Guide.md（Domain 1〜5 の Task Statements）
+# 各ドメインの review_links はリポジトリ内の実ファイルパス。弱点復習で利用する。
+# 生成時は、出題が特定タスクステートメントに偏らないよう task_statements を巡回すること。
+
+domains:
+  D1:
+    name: Agentic Architecture & Orchestration
+    weight: 0.27
+    task_statements:
+      "1.1": "エージェント的ループの設計（stop_reason に基づく制御フロー、tool_use/end_turn、ツール結果の文脈追加）"
+      "1.2": "コーディネーター-サブエージェント（hub-and-spoke、文脈は自動継承しない、動的委任、反復的洗練ループ）"
+      "1.3": "サブエージェント起動・文脈受け渡し（Task ツール、allowedTools に Task、明示的な文脈注入、並列起動、fork_session）"
+      "1.4": "複数ステップワークフローの強制とハンドオフ（プログラム的強制 vs プロンプト誘導、前提ゲート、構造化ハンドオフ）"
+      "1.5": "Agent SDK フック（PostToolUse でのデータ正規化、ツール呼び出し傍受での方針強制、決定論的保証 vs 確率的遵守）"
+      "1.6": "タスク分解戦略（固定逐次パイプライン=prompt chaining vs 動的適応分解、ファイル単位＋統合パス）"
+      "1.7": "セッション状態・再開・フォーク（--resume 名前付き、fork_session、stale なツール結果より要約注入で新規開始）"
+    key_anti_patterns:
+      - "自然言語シグナルでループ終了を判定する／反復回数上限を主な停止機構にする"
+      - "サブエージェントが親の文脈を自動継承すると仮定する"
+      - "決定論的遵守が必要な場面（本人確認→返金）でプロンプト指示のみに頼る"
+      - "単一のスーパーエージェントで全役割をこなす（専門サブエージェントに分けない）"
+    review_links:
+      blog:
+        - cca-f/official-blog/01-building-agents-with-sdk.md
+        - cca-f/official-blog/07-effective-harnesses-and-agent-skills.md
+      docs:
+        - docs/agent-sdk__agent-loop.md
+        - docs/agent-sdk__subagents.md
+        - docs/sub-agents.md
+        - docs/agent-sdk__sessions.md
+      skilljar:
+        - cca-f/skilljar-courses/phase2-03-subagents-intro.md
+        - cca-f/skilljar-courses/phase1-03-building-with-api.md
+
+  D2:
+    name: Tool Design & MCP Integration
+    weight: 0.18
+    task_statements:
+      "2.1": "効果的なツールインターフェース設計（説明文が選択の主機構、入力形式・例・境界、重複説明の解消、ツール分割）"
+      "2.2": "MCP の構造化エラー応答（isError、transient/validation/business/permission、isRetryable、retriable:false）"
+      "2.3": "ツールのエージェント間分配と tool_choice（18個より4-5個、専門外ツールの誤用、scoped access、auto/any/forced）"
+      "2.4": "MCP サーバー統合（.mcp.json=プロジェクト共有 / ~/.claude.json=個人、環境変数展開、同時利用、MCP resources）"
+      "2.5": "組み込みツールの選択（Grep=内容検索 / Glob=パス、Read+Write が Edit のフォールバック、段階的探索）"
+    key_anti_patterns:
+      - "似た説明文の重複ツール（analyze_content vs analyze_document）で誤ルーティングを放置"
+      - "一律の汎用エラー（Operation failed）で回復判断の手がかりを奪う"
+      - "1エージェントに過剰なツール（18個）を持たせ選択信頼性を下げる"
+      - "標準統合に既存コミュニティ MCP があるのに自前実装する"
+    review_links:
+      blog:
+        - cca-f/official-blog/02-writing-effective-tools.md
+        - cca-f/official-blog/03-code-execution-mcp-advanced-tool-use.md
+      docs:
+        - docs/agent-sdk__custom-tools.md
+        - docs/mcp.md
+        - docs/agent-sdk__mcp.md
+      skilljar:
+        - cca-f/skilljar-courses/phase2-01-mcp-intro.md
+        - cca-f/skilljar-courses/phase2-02-mcp-advanced.md
+
+  D3:
+    name: Claude Code Configuration & Workflows
+    weight: 0.20
+    task_statements:
+      "3.1": "CLAUDE.md 階層（user/project/directory、~/.claude は非共有、@import、.claude/rules/、/memory）"
+      "3.2": "カスタムスラッシュコマンドとスキル（.claude/commands vs ~/.claude/commands、SKILL.md frontmatter: context:fork, allowed-tools, argument-hint）"
+      "3.3": "パス固有ルール（.claude/rules/ の YAML frontmatter paths グロブ、型横断のルールに有利）"
+      "3.4": "プランモード vs 直接実行（大規模・複数アプローチ・アーキ判断はプラン、単純スコープは直接、Explore サブエージェント）"
+      "3.5": "反復的洗練（入出力の具体例、テスト駆動反復、interview パターン、相互作用する問題は一括/独立は逐次）"
+      "3.6": "CI/CD 統合（-p/--print、--output-format json、--json-schema、CLAUDE.md で文脈供給、自己レビューの限界）"
+    key_anti_patterns:
+      - "チーム共有が必要な設定を ~/.claude（user 個人）に置いて共有されない"
+      - "CI で -p フラグ無しに Claude を対話実行し、入力待ちでハングする"
+      - "コードベース横断のルールを各ディレクトリの CLAUDE.md に分散させる（rules グロブを使わない）"
+      - "アーキ判断を伴う大規模変更を直接実行で始め、後から手戻りする"
+    review_links:
+      blog:
+        - cca-f/official-blog/05-auto-mode-and-security.md
+        - cca-f/official-blog/07-effective-harnesses-and-agent-skills.md
+      docs:
+        - docs/memory.md
+        - docs/commands.md
+        - docs/agent-sdk__slash-commands.md
+        - docs/skills.md
+        - docs/settings.md
+        - docs/common-workflows.md
+        - docs/cli-reference.md
+        - docs/github-actions.md
+      skilljar:
+        - cca-f/skilljar-courses/phase3-01-claude-code-101.md
+        - cca-f/skilljar-courses/phase3-02-claude-code-action.md
+        - cca-f/skilljar-courses/phase3-03-agent-skills.md
+
+  D4:
+    name: Prompt Engineering & Structured Output
+    weight: 0.20
+    task_statements:
+      "4.1": "明示的基準で精度向上・誤検知削減（vague な指示より具体基準、be conservative は効かない、重大度の明文化）"
+      "4.2": "few-shot（最も効果的、曖昧ケースの判断提示、新規パターンへの汎化、抽出の幻覚削減）"
+      "4.3": "tool_use + JSON スキーマで構造化出力強制（auto/any/forced、構文エラー除去だが意味エラーは残る、nullable で捏造防止）"
+      "4.4": "検証・リトライ・フィードバックループ（エラー添付の再試行、情報不在時は無効、semantic vs syntax エラー）"
+      "4.5": "バッチ処理戦略（Message Batches API: 50%削減・最大24h・SLA無し、ブロッキング不可、custom_id、ツール多段不可）"
+      "4.6": "多インスタンス・多パスレビュー（自己レビューの限界、独立インスタンス、ファイル単位＋統合パス、確信度併記）"
+    key_anti_patterns:
+      - "「be conservative」「高確信度のみ報告」で精度を上げようとする（具体基準でない）"
+      - "ブロッキングな pre-merge チェックを Message Batches API に載せる"
+      - "必須フィールドにして情報不在時に値を捏造させる（nullable にしない）"
+      - "生成と同一セッションで自己レビューさせ、独立インスタンスを使わない"
+    review_links:
+      blog:
+        - cca-f/official-blog/06-demystifying-evals.md
+      docs:
+        - docs/agent-sdk__structured-outputs.md
+        - docs/cli-reference.md
+      skilljar:
+        - cca-f/skilljar-courses/phase1-03-building-with-api.md
+
+  D5:
+    name: Context Management & Reliability
+    weight: 0.15
+    task_statements:
+      "5.1": "長対話での重要情報保持（要約で数値/日付/期待を失う、lost-in-the-middle、冗長ツール出力のトリミング、case facts ブロック）"
+      "5.2": "エスカレーション・曖昧性解決（適切なトリガー: 人間要求/方針ギャップ/進捗不能、sentiment や自己申告確信度は不適、複数一致は追加識別子）"
+      "5.3": "マルチエージェントのエラー伝播（構造化エラー文脈、access failure vs 空結果、汎用ステータス禁止、沈黙の握り潰し禁止）"
+      "5.4": "大規模コードベース探索の文脈管理（劣化、scratchpad、サブエージェント委任、manifest でのクラッシュ回復、/compact）"
+      "5.5": "人間レビューと確信度キャリブレーション（集計精度が局所不良を隠す、層化抽出、フィールド単位確信度、文書型別の検証）"
+      "5.6": "出所保全と多源統合の不確実性（claim-source マッピング、矛盾統計は注釈、temporal データに日付、内容型別レンダリング）"
+    key_anti_patterns:
+      - "進捗的要約で数値・日付・顧客の明示的期待を曖昧化する"
+      - "高リスク判断で人間の監督を減らす／自己申告確信度や sentiment でエスカレーション判断する"
+      - "サブエージェントのエラーを空結果=成功として握り潰す、または単一失敗で全体を終了する"
+      - "矛盾する統計から根拠なく1つを選ぶ（出所注釈で両論併記しない）"
+    review_links:
+      blog:
+        - cca-f/official-blog/04-context-engineering-and-management.md
+      docs:
+        - docs/agent-sdk__sessions.md
+        - docs/agent-sdk__session-storage.md
+        - docs/common-workflows.md
+      skilljar:
+        - cca-f/skilljar-courses/phase1-02-ai-fluency.md
+        - cca-f/skilljar-courses/phase1-03-building-with-api.md
+
+# 横断モードでのドメイン配分は weight に比例させる。端数は D1 に寄せる。
+# 例（20問）: D1=5, D3=4, D4=4, D2=4, D5=3
+# 例（10問）: D1=3, D3=2, D4=2, D2=2, D5=1
+# 例（60問・フル模試）: D1=16, D3=12, D4=12, D2=11, D5=9

@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CCA-F Trainer schemas",
+  "description": "カンニング防止のため、出題前ファイルと正解ファイルを分離する。quiz-questions.json は public（正解なし）、answer-key は別ファイル answer-key.json に平文保存、weakness-log はセッション横断の成績蓄積。progress.json は進行中セッションの現在地で、毎ターン読み直して脱線を防ぐ。",
+
+  "definitions": {
+
+    "session_progress": {
+      "title": "progress.json（進行中セッションの現在地。記憶に頼らず毎ターン読み直す）",
+      "type": "object",
+      "required": ["session_dir", "mode", "total", "answered", "next_index", "phase"],
+      "properties": {
+        "session_dir": { "type": "string", "description": "例 2026-06-18-2008" },
+        "mode": { "type": "string", "enum": ["drill", "mock"], "description": "feedback_mode と同義。drill=1問ずつ即解説 / mock=4問ずつ一括採点" },
+        "language": { "type": "string", "enum": ["en-q-ja-explain", "en", "ja"] },
+        "content_mode": { "type": "string", "enum": ["mixed", "domain-focus", "weakness-review"] },
+        "focus_domain": { "type": ["string", "null"], "enum": ["D1", "D2", "D3", "D4", "D5", null] },
+        "total": { "type": "integer", "minimum": 1, "description": "総問題数" },
+        "answered": { "type": "integer", "minimum": 0, "description": "回収済み回答数" },
+        "next_index": { "type": "integer", "minimum": 1, "description": "次に出題／採点する問の id（1始まり）" },
+        "phase": { "type": "string", "enum": ["setup", "generating", "asking", "grading", "report", "done"], "description": "現在の段階。各アクションのたびに更新する" }
+      }
+    },
+
+    "quiz_questions_public": {
+      "title": "quiz-questions.json（出題前に書く。正解・解説・出典・is_correct を含めない）",
+      "type": "object",
+      "required": ["session", "questions"],
+      "properties": {
+        "session": {
+          "type": "object",
+          "required": ["date", "language", "content_mode", "feedback_mode", "count"],
+          "properties": {
+            "date": { "type": "string", "description": "YYYY-MM-DD" },
+            "language": { "type": "string", "enum": ["en-q-ja-explain", "en", "ja"], "description": "en-q-ja-explain=英語問題＋日本語解説（推奨）" },
+            "content_mode": { "type": "string", "enum": ["mixed", "domain-focus", "weakness-review"] },
+            "focus_domain": { "type": ["string", "null"], "enum": ["D1", "D2", "D3", "D4", "D5", null] },
+            "feedback_mode": { "type": "string", "enum": ["drill", "mock"], "description": "drill=1問ずつ即解説 / mock=まとめて一括採点" },
+            "count": { "type": "integer", "minimum": 1 },
+            "multi_select_variant": { "type": "boolean", "default": false, "description": "true の場合のみ複数正解バリアント。本番には無い旨を明示すること。" }
+          }
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "domain", "task_statement", "scenario", "difficulty", "stem", "options"],
+            "properties": {
+              "id": { "type": "integer", "description": "1始まりの通し番号" },
+              "domain": { "type": "string", "enum": ["D1", "D2", "D3", "D4", "D5"] },
+              "task_statement": { "type": "string", "description": "例 \"1.4\"。blueprint.yaml に対応" },
+              "scenario": { "type": "string", "enum": ["S1", "S2", "S3", "S4", "S5", "S6"] },
+              "difficulty": { "type": "string", "enum": ["L2", "L3"], "description": "L3=トレードオフ判断を主軸" },
+              "stem": { "type": "string", "description": "シナリオ文脈＋設問。単一正解で答えられる形。trivia 禁止。" },
+              "options": {
+                "type": "array",
+                "minItems": 4,
+                "maxItems": 4,
+                "description": "正解位置はランダム化する（A 固定にしない）。is_correct はここに書かない。",
+                "items": {
+                  "type": "object",
+                  "required": ["key", "text"],
+                  "properties": {
+                    "key": { "type": "string", "enum": ["A", "B", "C", "D"] },
+                    "text": { "type": "string", "description": "選択肢の全文。AskUserQuestion の description に入れる。" },
+                    "label": { "type": "string", "description": "短い見出し（任意）。AskUserQuestion の label 用。" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "answer_key": {
+      "title": "answer-key（別ファイル answer-key.json に平文保存。採点時に読む）",
+      "type": "object",
+      "required": ["keys"],
+      "properties": {
+        "keys": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "correct", "rationale", "citations", "option_notes"],
+            "properties": {
+              "id": { "type": "integer", "description": "quiz-questions.json の id に対応" },
+              "correct": { "type": "string", "enum": ["A", "B", "C", "D"] },
+              "rationale": { "type": "string", "description": "正解の理由＋他3つがなぜアンチパターンか。語学設定に従う。" },
+              "citations": {
+                "type": "array",
+                "minItems": 1,
+                "description": "正解の根拠。空なら問題を破棄。",
+                "items": {
+                  "type": "object",
+                  "required": ["path", "locator"],
+                  "properties": {
+                    "path": { "type": "string", "description": "リポジトリ内の実ファイルパス" },
+                    "locator": { "type": "string", "description": "タスクステートメント番号や見出し等" }
+                  }
+                }
+              },
+              "option_notes": {
+                "type": "array",
+                "description": "各選択肢の正誤と、誤答の tempting/why_wrong。解説に使う。",
+                "items": {
+                  "type": "object",
+                  "required": ["key", "is_correct"],
+                  "properties": {
+                    "key": { "type": "string", "enum": ["A", "B", "C", "D"] },
+                    "is_correct": { "type": "boolean" },
+                    "tempting": { "type": "string", "description": "なぜ魅力的か（誤答のみ）" },
+                    "why_wrong": { "type": "string", "description": "なぜ劣る/誤りか（誤答のみ）" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "weakness_log": {
+      "title": "cca-f/reports/weakness-log.json（セッション横断で追記蓄積）",
+      "type": "object",
+      "required": ["entries"],
+      "properties": {
+        "entries": {
+          "type": "array",
+          "description": "1問1エントリで append する。弱点復習モードの間隔反復に使う。",
+          "items": {
+            "type": "object",
+            "required": ["date", "session_dir", "question_id", "domain", "task_statement", "scenario", "difficulty", "correct"],
+            "properties": {
+              "date": { "type": "string", "description": "YYYY-MM-DD" },
+              "session_dir": { "type": "string", "description": "出典セッション（例 2026-06-18-2008）" },
+              "question_id": { "type": "integer" },
+              "domain": { "type": "string", "enum": ["D1", "D2", "D3", "D4", "D5"] },
+              "task_statement": { "type": "string" },
+              "scenario": { "type": "string", "enum": ["S1", "S2", "S3", "S4", "S5", "S6"] },
+              "difficulty": { "type": "string", "enum": ["L2", "L3"] },
+              "correct": { "type": "boolean", "description": "正答なら true" },
+              "user_choice": { "type": "string", "enum": ["A", "B", "C", "D"] }
+            }
+          }
+        }
+      }
+    }
+  }
+}
