@@ -1,0 +1,25 @@
+INVOICE
+
+From:     Acme Supplies Co.
+          123 Commerce St, San Francisco, CA 94105
+
+Invoice#: INV-2026-0042
+Issued:   June 1, 2026
+Due Date: June 30, 2026
+
+Bill To:  TechCorp Inc.
+          456 Tech Ave, Austin, TX 78701
+
+-----------------------------------------------
+Items:
+  Widget Pro          x5   @ $120.00  = $600.00
+  Gadget Basic        x10  @ $45.50   = $455.00
+-----------------------------------------------
+Subtotal:                               $1,055.00
+Tax (10%):                                $105.50
+                                      ----------
+TOTAL DUE:                              $1,160.50 USD
+-----------------------------------------------
+
+Please remit payment by June 30, 2026.
+Wire transfer or check accepted. Thank you!

@@ -1,0 +1,25 @@
+From:      jane.doe@example.com
+Submitted: 2026-06-15 09:23 UTC
+Customer:  CUST-4471
+
+Subject: Cannot process refund for damaged item — Order #ORD-88421
+
+Hi Support Team,
+
+I placed an order on June 10th for a Laptop Stand (qty: 1, unit price: $89.99).
+The item arrived on June 13th but was severely damaged — the base was cracked and
+the adjustment mechanism was broken.
+
+I submitted a refund request on June 12th (before the item even arrived) via the
+website, but I have not received any confirmation or update after 3 days.
+
+My account ID is CUST-4471 and my order ID is ORD-88421.
+
+I need this resolved urgently. Please process the full refund of $89.99 USD and
+confirm by email. If this is not resolved within 2 business days, I will dispute
+the charge with my credit card company.
+
+Priority: HIGH
+
+Thanks,
+Jane Doe
