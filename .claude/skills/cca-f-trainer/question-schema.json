@@ -1,42 +1,65 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "CCA-F Trainer schemas",
-  "description": "カンニング防止のため、出題前ファイルと正解ファイルを分離する。quiz-questions.json は public（正解なし）、answer-key は別ファイル answer-key.json に平文保存、weakness-log はセッション横断の成績蓄積。progress.json は進行中セッションの現在地で、毎ターン読み直して脱線を防ぐ。",
+  "description": "問題は永続「バンク」（banks/<name>/、コミット対象）に保存し、出題は単発「ラン」（sessions/<dir>/、gitignore）で行う。カンニング防止のため、バンク内でも出題前ファイルと正解ファイルを分離する：quiz-questions.json は public（正解なし）、answer-key.json は別ファイルに平文保存。manifest.json はバンクのメタと生成進捗（再開用）。progress.json はランの現在地で、毎ターン読み直して脱線を防ぐ。weakness-log はセッション横断の成績蓄積。",
 
   "definitions": {
 
-    "session_progress": {
-      "title": "progress.json（進行中セッションの現在地。記憶に頼らず毎ターン読み直す）",
+    "bank_manifest": {
+      "title": "banks/<name>/manifest.json（バンクのメタ＋生成進捗。作成プロセスが書き、出題プロセスが読む）",
       "type": "object",
-      "required": ["session_dir", "mode", "total", "answered", "next_index", "phase"],
+      "required": ["name", "created_date", "focus", "total", "generated", "status"],
+      "properties": {
+        "name": { "type": "string", "description": "バンク名＝ディレクトリ名。例 mock-60-2026-06-20 / focus-D2-2026-06-20 / weakness-2026-06-20" },
+        "created_date": { "type": "string", "description": "YYYY-MM-DD" },
+        "language": { "type": "string", "enum": ["en"], "default": "en", "description": "バンクの authoring 言語。本番が英語なので常に en（canonical）で生成する。出題言語は解くフェーズ（deliver）で選ぶため、ここには焼き込まない。" },
+        "focus": { "type": "string", "enum": ["mixed", "domain-focus", "weakness"], "description": "mixed=公式重み比例の横断 / domain-focus=特定ドメイン集中 / weakness=weakness-log を元に弱点ターゲット" },
+        "focus_domain": { "type": ["string", "null"], "enum": ["D1", "D2", "D3", "D4", "D5", null], "description": "focus=domain-focus のとき対象ドメイン" },
+        "domain_distribution": {
+          "type": "object",
+          "description": "ドメイン別の出題数。例 {\"D1\":16,\"D3\":12,\"D4\":12,\"D2\":11,\"D5\":9}",
+          "additionalProperties": { "type": "integer" }
+        },
+        "total": { "type": "integer", "minimum": 1, "description": "完成時の総問題数（目標）" },
+        "generated": { "type": "integer", "minimum": 0, "description": "生成済み問題数。バッチ生成・中断再開のために各バッチ後に更新する" },
+        "status": { "type": "string", "enum": ["generating", "ready"], "description": "generating=生成途中（再開可能） / ready=完成して出題可能" },
+        "source": { "type": ["string", "null"], "description": "出典・由来。例 \"blueprint 横断\" / \"weakness-log 2026-06-19 時点\" / 元レポートのパス" }
+      }
+    },
+
+    "session_progress": {
+      "title": "progress.json（ランの現在地。記憶に頼らず毎ターン読み直す。出題プロセス専用）",
+      "type": "object",
+      "required": ["session_dir", "bank", "mode", "total", "answered", "next_index", "phase"],
       "properties": {
         "session_dir": { "type": "string", "description": "例 2026-06-18-2008" },
+        "bank": { "type": "string", "description": "このランが解いているバンク名（banks/<name>/）。出題・採点はこのバンクの quiz-questions.json / answer-key.json を読む" },
+        "question_ids": { "type": "array", "items": { "type": "integer" }, "description": "バンクから選んだ出題対象の id 列（全問なら全 id、部分出題なら部分集合・出題順）。next_index はこの列上の位置で進める" },
         "mode": { "type": "string", "enum": ["drill", "mock"], "description": "feedback_mode と同義。drill=1問ずつ即解説 / mock=4問ずつ一括採点" },
-        "language": { "type": "string", "enum": ["en-q-ja-explain", "en", "ja"] },
-        "content_mode": { "type": "string", "enum": ["mixed", "domain-focus", "weakness-review"] },
-        "focus_domain": { "type": ["string", "null"], "enum": ["D1", "D2", "D3", "D4", "D5", null] },
-        "total": { "type": "integer", "minimum": 1, "description": "総問題数" },
+        "language": { "type": "string", "enum": ["en-q-ja-explain", "en", "ja"], "description": "出題言語。解くフェーズ（deliver）でユーザが選ぶ。バンクは英語 canonical なので、ja は提示時に翻訳、en-q-ja-explain は解説のみ日本語にする" },
+        "total": { "type": "integer", "minimum": 1, "description": "このランで解く問題数（question_ids の長さ）" },
         "answered": { "type": "integer", "minimum": 0, "description": "回収済み回答数" },
-        "next_index": { "type": "integer", "minimum": 1, "description": "次に出題／採点する問の id（1始まり）" },
-        "phase": { "type": "string", "enum": ["setup", "generating", "asking", "grading", "report", "done"], "description": "現在の段階。各アクションのたびに更新する" }
+        "next_index": { "type": "integer", "minimum": 1, "description": "次に出題／採点する問の位置（question_ids 上で1始まり）" },
+        "phase": { "type": "string", "enum": ["setup", "asking", "grading", "report", "done"], "description": "ランの現在段階。各アクションのたびに更新する（生成はバンク側 manifest.status で管理）" }
       }
     },
 
     "quiz_questions_public": {
-      "title": "quiz-questions.json（出題前に書く。正解・解説・出典・is_correct を含めない）",
+      "title": "banks/<name>/quiz-questions.json（作成プロセスが書くバンクの問題本体。正解・解説・出典・is_correct を含めない）",
       "type": "object",
-      "required": ["session", "questions"],
+      "required": ["bank", "questions"],
       "properties": {
-        "session": {
+        "bank": {
           "type": "object",
-          "required": ["date", "language", "content_mode", "feedback_mode", "count"],
+          "description": "バンクのメタ（manifest.json と整合させる）。feedback_mode は出題プロセス側で選ぶためここには含めない。",
+          "required": ["name", "date", "focus"],
           "properties": {
+            "name": { "type": "string", "description": "バンク名＝ディレクトリ名" },
             "date": { "type": "string", "description": "YYYY-MM-DD" },
-            "language": { "type": "string", "enum": ["en-q-ja-explain", "en", "ja"], "description": "en-q-ja-explain=英語問題＋日本語解説（推奨）" },
-            "content_mode": { "type": "string", "enum": ["mixed", "domain-focus", "weakness-review"] },
+            "language": { "type": "string", "enum": ["en"], "default": "en", "description": "バンクは英語 canonical。出題言語は解く時に選ぶ。" },
+            "focus": { "type": "string", "enum": ["mixed", "domain-focus", "weakness"] },
             "focus_domain": { "type": ["string", "null"], "enum": ["D1", "D2", "D3", "D4", "D5", null] },
-            "feedback_mode": { "type": "string", "enum": ["drill", "mock"], "description": "drill=1問ずつ即解説 / mock=まとめて一括採点" },
-            "count": { "type": "integer", "minimum": 1 },
+            "count": { "type": "integer", "minimum": 1, "description": "現時点で含まれる問題数（生成途中は generated と一致）" },
             "multi_select_variant": { "type": "boolean", "default": false, "description": "true の場合のみ複数正解バリアント。本番には無い旨を明示すること。" }
           }
         },

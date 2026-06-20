@@ -1,6 +1,7 @@
 # CCA-F 演習レポート — {DATE}
 
-> セッション: 言語={LANGUAGE} / モード={MODE} / 問題数={COUNT}
+> セッション: 言語={LANGUAGE} / 形式={MODE_LABEL} / 問題数={COUNT}
+> （{MODE_LABEL} は「1問ずつ解説」または「まとめて一括採点」のような日本語表記にする。drill/mock などの内部キーは書かない）
 > 出題シナリオ: {SCENARIOS}
 
 ## 1. サマリー
