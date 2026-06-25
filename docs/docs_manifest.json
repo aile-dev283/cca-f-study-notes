@@ -255,8 +255,8 @@
     "changelog.md": {
       "original_url": "https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md",
       "original_raw_url": "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md",
-      "hash": "a762e8a5a11adffc8a56296ac366f8070232dd8347edc5a4fc6ab72b1e4135ea",
-      "last_updated": "2026-06-24T22:08:12.885023",
+      "hash": "095f674926f8292fd21e1e36313b5add88c739595abe4fbed51c5dd83a533b79",
+      "last_updated": "2026-06-25T22:17:53.490910",
       "source": "claude-code-repository"
     },
     "channels.md": {
@@ -586,8 +586,8 @@
     "monitoring-usage.md": {
       "original_url": "https://code.claude.com/docs/en/monitoring-usage",
       "original_md_url": "https://code.claude.com/docs/en/monitoring-usage.md",
-      "hash": "8be91bf824c4a20dc22ffb1e002874cad7926b59edbf18ff60ceeb306e835081",
-      "last_updated": "2026-06-25T19:45:00.588828"
+      "hash": "447b65f5a500223999c94b0c15d0d1fee3c359c83d276b0a9d58c82388d0da13",
+      "last_updated": "2026-06-25T22:16:50.033775"
     },
     "network-config.md": {
       "original_url": "https://code.claude.com/docs/en/network-config",
@@ -927,8 +927,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-06-25T19:45:57.002686",
-    "fetch_duration_seconds": 153.194087,
+    "last_fetch_completed": "2026-06-25T22:17:53.490958",
+    "fetch_duration_seconds": 188.885477,
     "total_pages_discovered": 154,
     "pages_fetched_successfully": 155,
     "pages_failed": 0,
@@ -938,7 +938,7 @@
     "total_files": 154,
     "fetch_tool_version": "3.0"
   },
-  "last_updated": "2026-06-25T19:45:57.002711",
+  "last_updated": "2026-06-25T22:17:53.490981",
   "base_url": "https://raw.githubusercontent.com/aile-dev283/cca-f-study-notes/main/docs/",
   "github_repository": "aile-dev283/cca-f-study-notes",
   "github_ref": "main",
