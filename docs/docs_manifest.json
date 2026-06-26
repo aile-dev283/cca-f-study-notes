@@ -430,8 +430,8 @@
     "fullscreen.md": {
       "original_url": "https://code.claude.com/docs/en/fullscreen",
       "original_md_url": "https://code.claude.com/docs/en/fullscreen.md",
-      "hash": "8e0781b0cc4853fecff243dc56cd7adeabeae432a9f9da0dfdf9ccf99287648b",
-      "last_updated": "2026-06-24T16:59:27.530324"
+      "hash": "71f2a6d52631abbebdd60983a3c3c2fc7761bceb4dd1748a0aea6f3f37c698f1",
+      "last_updated": "2026-06-26T19:27:40.126092"
     },
     "github-actions.md": {
       "original_url": "https://code.claude.com/docs/en/github-actions",
@@ -927,8 +927,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-06-26T16:56:36.695085",
-    "fetch_duration_seconds": 141.068966,
+    "last_fetch_completed": "2026-06-26T19:29:01.272490",
+    "fetch_duration_seconds": 164.847685,
     "total_pages_discovered": 154,
     "pages_fetched_successfully": 155,
     "pages_failed": 0,
@@ -938,7 +938,7 @@
     "total_files": 154,
     "fetch_tool_version": "3.0"
   },
-  "last_updated": "2026-06-26T16:56:36.695117",
+  "last_updated": "2026-06-26T19:29:01.272520",
   "base_url": "https://raw.githubusercontent.com/aile-dev283/cca-f-study-notes/main/docs/",
   "github_repository": "aile-dev283/cca-f-study-notes",
   "github_ref": "main",
