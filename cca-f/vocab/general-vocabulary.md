@@ -40,6 +40,17 @@
 | delegate | 委任する、任せる | "delegate subtasks to subagents" | サブタスクをサブエージェントに委任する |
 | spawn | 生成する、起動する | "spawn a new subagent for each domain" | 各ドメインに新しいサブエージェントを生成する |
 | infer | 推測する、推論する | "infer user intent from context" | コンテキストからユーザーの意図を推測する |
+| partition | 分割する、振り分ける | "partition the research space before delegation" | 委任前にリサーチ領域を分割する |
+| constrain | 制約する、制限する | "constrains capability at the interface level" | インターフェースレベルで能力を制約する |
+| annotate | 注釈を付ける、ラベルを付ける | "explicitly annotate the conflict with source attribution" | 出典を示して矛盾を明示的に注釈する |
+| reconcile | 矛盾を解消する、調整する | "reconcile conflicting findings before synthesis" | 統合前に矛盾する調査結果を調整する |
+| dispatch | 送り出す、転送する | "dispatch retry commands directly to subagents" | サブエージェントに直接リトライコマンドを送る |
+| condense | 圧縮する、要約する | "condense findings before passing to synthesis" | 統合に渡す前に調査結果を圧縮する |
+| intercept | 途中で取得する、横取りする | "intercept tool results and apply transformations" | ツール結果を途中で取得して変換を適用する |
+| normalize | 正規化する、形式を統一する | "normalize data formats from heterogeneous tools" | 異種ツールからのデータ形式を正規化する |
+| surface (v.) | 表面化させる、露出させる | "surface high-confidence findings to developers" | 信頼度の高い問題を開発者に提示する |
+| flag (v.) | マーク／フラグを立てる、指摘する | "flag comments only when claimed behavior contradicts code" | 主張される動作がコードと矛盾するときのみコメントにフラグを立てる |
+| stem from | 〜に起因する、〜から生じる | "the misrouting stems from the system prompt" | 誤ルーティングはシステムプロンプトに起因する |
 
 ---
 
@@ -76,6 +87,11 @@
 | retriable | 再試行可能な | "mark transient errors as retriable" | 一時的なエラーを再試行可能としてマークする |
 | scoped | スコープ限定の、範囲を絞った | "scoped tool access per agent" | エージェントごとにスコープを絞ったツールアクセス |
 | verbose | 冗長な、詳細すぎる | "trim verbose tool outputs" | 冗長なツール出力を削減する |
+| unambiguous | 明確な、曖昧さのない | "making each tool's purpose unambiguous" | 各ツールの目的を曖昧さなく明確にする |
+| credible | 信頼できる、信憑性のある | "two credible sources with conflicting statistics" | 矛盾した統計を持つ2つの信頼できるソース |
+| sequential | 逐次的な（1件ずつ順番に） | "investigating concerns sequentially rather than in parallel" | 並行してではなく逐次的に懸念事項を調査する |
+| incremental | 段階的な、漸進的な | "make changes incrementally" | 段階的に変更を加える |
+| straightforward | 単純明快な、分かりやすい | "straightforward cases like standard damage replacements" | 標準的な損傷交換のような単純明快なケース |
 
 ---
 
@@ -110,6 +126,18 @@
 | criterion / criteria | 基準（単数 / 複数） | "explicit criteria for escalation" | エスカレーションのための明示的な基準 |
 | threshold | しきい値、閾値 | "set a confidence threshold" | 信頼度のしきい値を設定する |
 | footprint | 影響範囲 | "minimize the agent's footprint" | エージェントの影響範囲を最小化する |
+| discrepancy | 不一致、食い違い | "the discrepancy could significantly affect conclusions" | 食い違いが結論に大きく影響する可能性がある |
+| round-trip | 往復通信（リクエスト→レスポンス 1サイクル） | "adding 2-3 round trips per task" | タスクごとに2〜3往復の通信を追加する |
+| prerequisite | 前提条件、事前に必要なもの | "a programmatic prerequisite that blocks lookup_order" | lookup_order をブロックするプログラム的な前提条件 |
+| classifier | 分類器（入力を分類するシステム） | "a pre-routing classifier that detects order queries" | 注文クエリを検出する事前ルーティング分類器 |
+| escalation | エスカレーション（上位権限への引き継ぎ） | "explicit escalation criteria in the system prompt" | システムプロンプトの明示的なエスカレーション基準 |
+| annotation | 注釈、補足情報 | "coverage annotations indicating which findings are well-supported" | どの調査結果が十分に裏付けられているかを示す補足注釈 |
+| attribution | 出典帰属（情報をその源に紐付けること） | "explicit annotation with source attribution" | 出典帰属を伴う明示的な注釈 |
+| false positive | 誤検知（問題がないのに問題と判定） | "40% false positive rate across all categories" | 全カテゴリにわたる40%の誤検知率 |
+| false negative | 見逃し（問題があるのに検知できないこと） | "missing comments that describe behavior no longer implemented" | 実装されなくなった動作を記述するコメントの見逃し |
+| confirmation bias | 確証バイアス（既存の考えを肯定する傾向） | "confirmation bias in self-review" | 自己レビューにおける確証バイアス |
+| exponential backoff | 指数バックオフ（リトライ間隔を指数的に延ばす手法） | "retry with exponential backoff before reporting failure" | 失敗を報告する前に指数バックオフでリトライする |
+| primacy effect | 初頭効果（最初に提示された情報が記憶に残りやすい現象） | "a key findings summary leverages the primacy effect" | 主要調査結果のサマリーは初頭効果を活用する |
 
 ---
 
@@ -139,6 +167,15 @@
 | in isolation | 単独で、他と切り離して | "the option is correct in isolation but..." | その選択肢は単独では正しいが… |
 | at scale | 大規模に、スケールした状態で | "this approach fails at scale" | このアプローチは大規模になると破綻する |
 | in practice | 実際には | "in practice, this creates new problems" | 実際には、これは新たな問題を生む |
+| fire-and-forget | 送信後は応答を待たない非同期モデル | "the batch API's asynchronous fire-and-forget model" | バッチAPIの非同期ファイアアンドフォゲットモデル |
+| hub-and-spoke | 中心ノードと放射状接続（コーディネーターパターン） | "hub-and-spoke communication via the coordinator" | コーディネーター経由のハブアンドスポーク通信 |
+| first-contact resolution | 初回接触での解決（カスタマーサポートの指標） | "80% first-contact resolution target" | 80%の初回接触解決目標 |
+| lost in the middle | モデルが長い入力の中間部を見落とす現象 | "mitigating the 'lost in the middle' phenomenon" | 「ミドルロスト」現象を緩和する |
+| graceful degradation | 部分的障害時でも機能を維持して継続すること | "graceful degradation with transparency" | 透明性を持った段階的機能低下 |
+| at the source | 発生元で、源流で | "reduces token volume at the source" | 発生元でトークン量を削減する |
+| semantic overlap | 意味の重複・かぶり | "eliminates the semantic overlap between the two tools" | 2つのツール間の意味的な重複を排除する |
+| peer review | 同等レベルの者によるレビュー | "mirroring human peer review" | 人間のピアレビューを模倣する |
+| without proportionally | 比例した効果を伴わずに | "token usage doubled without proportionally increasing coverage" | カバレッジを比例して増やすことなくトークン使用量が倍増した |
 
 ---
 
