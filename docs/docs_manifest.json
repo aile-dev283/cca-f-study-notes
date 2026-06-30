@@ -87,8 +87,8 @@
     "agent-sdk__permissions.md": {
       "original_url": "https://code.claude.com/docs/en/agent-sdk/permissions",
       "original_md_url": "https://code.claude.com/docs/en/agent-sdk/permissions.md",
-      "hash": "ce3d0ca280855b7dd9569cb94ebea1e581a8beafba2d5e4b13ceed0402b107df",
-      "last_updated": "2026-06-10T00:28:58.968157"
+      "hash": "f0bf59038a97673032d43c14a463bc585d469e2e88999fa1a356672b72356f98",
+      "last_updated": "2026-06-30T22:07:43.391241"
     },
     "agent-sdk__plugins.md": {
       "original_url": "https://code.claude.com/docs/en/agent-sdk/plugins",
@@ -99,8 +99,8 @@
     "agent-sdk__python.md": {
       "original_url": "https://code.claude.com/docs/en/agent-sdk/python",
       "original_md_url": "https://code.claude.com/docs/en/agent-sdk/python.md",
-      "hash": "20d33633448ee5f2068bb66423591186ce0b95dbb478c0ccec6d9f3f9655155e",
-      "last_updated": "2026-06-30T19:28:47.922398"
+      "hash": "f2df00df344c4a695d3b5aaacd825025b1fa49c51f9f734251cd610728517c35",
+      "last_updated": "2026-06-30T22:07:45.693111"
     },
     "agent-sdk__quickstart.md": {
       "original_url": "https://code.claude.com/docs/en/agent-sdk/quickstart",
@@ -177,8 +177,8 @@
     "agent-sdk__typescript.md": {
       "original_url": "https://code.claude.com/docs/en/agent-sdk/typescript",
       "original_md_url": "https://code.claude.com/docs/en/agent-sdk/typescript.md",
-      "hash": "2a6887c326b3b608db55a122fd48eaac3bbcb99fdb261db877f7c1f8b9763344",
-      "last_updated": "2026-06-30T19:29:04.009704"
+      "hash": "0c99c2cd04421ede53f230d230ec6e464bdcc9c4420136f2300f25f4a5c12c33",
+      "last_updated": "2026-06-30T22:08:05.141339"
     },
     "agent-sdk__typescript-v2-preview.md": {
       "original_url": "https://code.claude.com/docs/en/agent-sdk/typescript-v2-preview",
@@ -189,8 +189,8 @@
     "agent-sdk__user-input.md": {
       "original_url": "https://code.claude.com/docs/en/agent-sdk/user-input",
       "original_md_url": "https://code.claude.com/docs/en/agent-sdk/user-input.md",
-      "hash": "2065d6bc88c5407c637aa98ab6c2932048aea698d3366cb80be174111b04bcb1",
-      "last_updated": "2026-06-09T15:59:09.524437"
+      "hash": "6d05df151186f4c9d5a81dcd01230a6f6cc5d4e8ec2bf1cbd54631b37b748a61",
+      "last_updated": "2026-06-30T22:08:10.105839"
     },
     "agent-teams.md": {
       "original_url": "https://code.claude.com/docs/en/agent-teams",
@@ -766,8 +766,8 @@
     "server-managed-settings.md": {
       "original_url": "https://code.claude.com/docs/en/server-managed-settings",
       "original_md_url": "https://code.claude.com/docs/en/server-managed-settings.md",
-      "hash": "74ff75f42893a1882989b3b94f853e7c8c8f2db00acd1e43a956573e3dc65962",
-      "last_updated": "2026-06-29T22:04:49.460335"
+      "hash": "fdc271c233e877fd42b110e3af368b7f0fe1987e43deec50469fbd28b74292ca",
+      "last_updated": "2026-06-30T22:11:39.129850"
     },
     "sessions.md": {
       "original_url": "https://code.claude.com/docs/en/sessions",
@@ -778,8 +778,8 @@
     "settings.md": {
       "original_url": "https://code.claude.com/docs/en/settings",
       "original_md_url": "https://code.claude.com/docs/en/settings.md",
-      "hash": "6ca532c3240f5bdd4aa2cb4bff489a754327da59343646e7f47a4415da2d18a0",
-      "last_updated": "2026-06-30T19:30:55.219096"
+      "hash": "62a394c4a1235f5658f1af4c0bfdc12e73e4e5ceea5cbbba84fd009be15f191e",
+      "last_updated": "2026-06-30T22:11:43.383243"
     },
     "setup.md": {
       "original_url": "https://code.claude.com/docs/en/setup",
@@ -981,8 +981,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-06-30T19:31:32.554234",
-    "fetch_duration_seconds": 184.981038,
+    "last_fetch_completed": "2026-06-30T22:12:51.339380",
+    "fetch_duration_seconds": 370.623776,
     "total_pages_discovered": 163,
     "pages_fetched_successfully": 164,
     "pages_failed": 0,
@@ -992,7 +992,7 @@
     "total_files": 163,
     "fetch_tool_version": "3.0"
   },
-  "last_updated": "2026-06-30T19:31:32.554252",
+  "last_updated": "2026-06-30T22:12:51.339410",
   "base_url": "https://raw.githubusercontent.com/aile-dev283/cca-f-study-notes/main/docs/",
   "github_repository": "aile-dev283/cca-f-study-notes",
   "github_ref": "main",
