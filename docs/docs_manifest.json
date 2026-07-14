@@ -796,8 +796,8 @@
     "setup.md": {
       "original_url": "https://code.claude.com/docs/en/setup",
       "original_md_url": "https://code.claude.com/docs/en/setup.md",
-      "hash": "842039a7be374086b54ec52588c894427e72c2d354cd49f3a40ea41a516710f9",
-      "last_updated": "2026-07-13T21:44:38.172945"
+      "hash": "5881b32a9835cf94f5b47d4a33fa796db46904f3d22840fbe13f4e17c55524b9",
+      "last_updated": "2026-07-14T16:09:48.433935"
     },
     "skills.md": {
       "original_url": "https://code.claude.com/docs/en/skills",
@@ -1005,8 +1005,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-07-14T13:04:53.812273",
-    "fetch_duration_seconds": 201.706519,
+    "last_fetch_completed": "2026-07-14T16:10:24.894489",
+    "fetch_duration_seconds": 196.03098,
     "total_pages_discovered": 167,
     "pages_fetched_successfully": 168,
     "pages_failed": 0,
@@ -1016,7 +1016,7 @@
     "total_files": 167,
     "fetch_tool_version": "3.0"
   },
-  "last_updated": "2026-07-14T13:04:53.812321",
+  "last_updated": "2026-07-14T16:10:24.894517",
   "base_url": "https://raw.githubusercontent.com/aile-dev283/cca-f-study-notes/main/docs/",
   "github_repository": "aile-dev283/cca-f-study-notes",
   "github_ref": "main",
