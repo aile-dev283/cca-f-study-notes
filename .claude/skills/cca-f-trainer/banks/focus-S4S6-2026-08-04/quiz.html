@@ -269,6 +269,10 @@ body.dark-theme .option.dimmed { opacity: .55; }
   font-size: 11px; padding: 2px 10px; border-radius: 20px;
   font-weight: 700; background: #fff5f5; color: #c53030;
 }
+.group-badge-correct {
+  font-size: 11px; padding: 2px 10px; border-radius: 20px;
+  font-weight: 700; background: #f0fff4; color: #2f855a;
+}
 .wrong-item {
   display: flex; gap: 10px; align-items: flex-start;
   padding: 12px 0; border-bottom: 1px solid var(--border);
@@ -477,12 +481,15 @@ function showSummary() {
   const answered = Object.keys(state.answers).length;
   let correct = 0;
   const wrongByScenario = {};
+  const correctByScenario = {};
 
   QUESTIONS.forEach(q => {
     const ans = state.answers[q.global_n];
     if (ans === undefined) return;
     if (ans === q.correct) {
       correct++;
+      if (!correctByScenario[q.scenario]) correctByScenario[q.scenario] = [];
+      correctByScenario[q.scenario].push({ q: q, chosen: ans });
     } else {
       if (!wrongByScenario[q.scenario]) wrongByScenario[q.scenario] = [];
       wrongByScenario[q.scenario].push({ q: q, chosen: ans });
@@ -493,30 +500,38 @@ function showSummary() {
   const pct = answered > 0 ? Math.round(correct / answered * 100) : 0;
   const unanswered = total - answered;
 
-  let wrongGroupsHtml = '';
-  for (const scenario in wrongByScenario) {
-    const items = wrongByScenario[scenario];
-    const rows = items.map(item => {
-      const chosenOpt = item.q.options.find(o => o.letter === item.chosen);
-      const correctOpt = item.q.options.find(o => o.letter === item.q.correct);
-      return '<div class="wrong-item">' +
-        '<div class="wi-n">Q' + item.q.global_n + '</div>' +
-        '<div class="wi-q">' +
-          '<div class="wi-situation">' + md(item.q.situation) + '</div>' +
-          '<div class="wi-prompt">' + md(item.q.question) + '</div>' +
-          '<div class="wi-ans">' +
-            'Your answer: <span class="wi-wrong-tag">' + item.chosen + '</span> — ' + md(chosenOpt ? chosenOpt.text : '') + '<br>' +
-            'Correct: <span class="wi-correct-tag">' + item.q.correct + '</span> — ' + md(correctOpt ? correctOpt.text : '') +
-          '</div>' +
-        '</div></div>';
-    }).join('');
-    wrongGroupsHtml +=
-      '<div class="group-block">' +
-        '<div class="group-title">' + scenario +
-          '<span class="group-badge">' + items.length + ' incorrect</span></div>' +
-        rows +
-      '</div>';
+  function renderGroups(byScenario, badgeClass, badgeLabel, ansClass, ansTag) {
+    let html = '';
+    for (const scenario in byScenario) {
+      const items = byScenario[scenario];
+      const rows = items.map(item => {
+        const chosenOpt = item.q.options.find(o => o.letter === item.chosen);
+        const correctOpt = item.q.options.find(o => o.letter === item.q.correct);
+        return '<div class="wrong-item">' +
+          '<div class="wi-n">Q' + item.q.global_n + '</div>' +
+          '<div class="wi-q">' +
+            '<div class="wi-situation">' + md(item.q.situation) + '</div>' +
+            '<div class="wi-prompt">' + md(item.q.question) + '</div>' +
+            '<div class="wi-ans">' +
+              'Your answer: <span class="' + ansClass + '">' + item.chosen + '</span> — ' + md(chosenOpt ? chosenOpt.text : '') +
+              (item.chosen !== item.q.correct
+                ? '<br>Correct: <span class="wi-correct-tag">' + item.q.correct + '</span> — ' + md(correctOpt ? correctOpt.text : '')
+                : '') +
+            '</div>' +
+          '</div></div>';
+      }).join('');
+      html +=
+        '<div class="group-block">' +
+          '<div class="group-title">' + scenario +
+            '<span class="' + badgeClass + '">' + items.length + ' ' + badgeLabel + '</span></div>' +
+          rows +
+        '</div>';
+    }
+    return html;
   }
+
+  const wrongGroupsHtml = renderGroups(wrongByScenario, 'group-badge', 'incorrect', 'wi-wrong-tag');
+  const correctGroupsHtml = renderGroups(correctByScenario, 'group-badge-correct', 'correct', 'wi-correct-tag');
 
   const unansweredNote = unanswered > 0
     ? '<p style="color:#e53e3e;font-size:14px;margin-bottom:20px;font-weight:600;">&#9888; ' + unanswered + ' question(s) not answered.</p>'
@@ -531,9 +546,11 @@ function showSummary() {
       '<div class="score-card correct-c"><div class="big">' + correct + '</div><div class="label">Correct</div></div>' +
       '<div class="score-card wrong-c"><div class="big">' + wrong + '</div><div class="label">Incorrect</div></div>' +
     '</div>' +
-    (wrong > 0
-      ? '<div class="section-title">Incorrect answers by scenario</div>' + wrongGroupsHtml
-      : '<p style="color:#38a169;font-weight:700;font-size:17px;">All answered questions correct!</p>') +
+    (wrong > 0 ? '<div class="section-title">Incorrect answers by scenario</div>' + wrongGroupsHtml : '') +
+    (correct > 0 ? '<div class="section-title">Correct answers by scenario</div>' + correctGroupsHtml : '') +
+    (answered > 0 && wrong === 0
+      ? '<p style="color:#38a169;font-weight:700;font-size:17px;">All answered questions correct!</p>'
+      : '') +
     '<button class="restart-btn" onclick="restart()">Restart Exam</button>' +
     '<button class="restart-btn download-btn" onclick="downloadResults()">Download Results (JSON)</button>' +
     '<button class="restart-btn ai-btn" onclick="downloadAIReport()">Download for AI Analysis (Markdown)</button>' +
