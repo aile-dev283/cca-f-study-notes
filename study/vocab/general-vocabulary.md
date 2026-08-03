@@ -228,3 +228,44 @@
 | in contrast to | 〜とは対照的に | 比較で差異を強調 |
 | as opposed to | 〜ではなく（対比） | "X as opposed to Y" → X を推奨 |
 | compared to | 〜と比較して | 相対的な評価 |
+
+---
+
+## Section 7: 追加語彙（Practice Exam 60問セットより）
+
+Anthropic公式 Practice Exam（`cca-f_practice_exam_questions_only.md`、60問）を精読して抽出した追加語彙。
+既存セクションと重複しない語のみ収録。頻度が高い語（escalate系11回、propagate系5回、false positive 5回、ambiguous系5回、exemplar 5回など）を優先。
+
+| 英語 | 日本語 | 試験文脈での例 | 例文の日本語訳 |
+|------|--------|--------------|--------------|
+| verbatim | 逐語的に、そのままの形で | "recent turns are summarized while recent ones stay verbatim" | 最近のターンは要約されず逐語のまま保持される |
+| persistent (error) | 持続する、恒常的な（≒transientの対義語） | "retry transient failures internally and only report persistent errors" | 一時的な失敗は内部でリトライし、持続的なエラーのみ報告する |
+| redundant | 冗長な、重複した | "eliminate redundant feedback while maintaining thorough analysis" | 徹底した分析を維持しつつ重複したフィードバックを排除する |
+| synchronous | 同期的な（即時応答を待つ） | "Synchronous for PR style checks; Message Batches API for weekly audits" | PRのスタイルチェックは同期的に、週次監査はBatches APIで |
+| asynchronous | 非同期的な | "The asynchronous model prevents executing tools mid-request" | 非同期モデルではリクエスト途中でのツール実行ができない |
+| polling | ポーリング（完了を定期的に確認すること） | "polls for batch completion, then posts detailed suggestions" | バッチ完了をポーリングし、詳細な提案を投稿する |
+| upstream | 上流の（データ・処理の起点側） | "an error indicating incomplete upstream data" | 上流データが不完全であることを示すエラー |
+| steer | 誘導する、操る | "keyword-sensitive instructions that steer behavior based on terms" | 用語に基づいて動作を誘導するキーワード反応的な指示 |
+| override (v./n.) | 上書きする、優先する／上書き設定 | "instruct developers to override it locally" | 開発者にローカルで上書きするよう指示する |
+| placeholder | プレースホルダー（仮の値） | "configure the server with a placeholder token" | プレースホルダーのトークンでサーバーを設定する |
+| wrapper | ラッパー（既存機能を包む層） | "create wrapper tools for third-party tools" | サードパーティ製ツール用にラッパーツールを作成する |
+| proxy (v.) | 代理として中継する | "reads tokens from a .env file and proxies to the GitHub API" | .envファイルからトークンを読み取りGitHub APIへ中継する |
+| exemplar | 模範例、手本となるサンプル | "2-3 full exemplar endpoint implementations" | 2〜3個の完全な模範的エンドポイント実装 |
+| inline | インラインの（その場に埋め込まれた） | "auto-post each finding as a separate inline PR comment" | 各指摘を個別のインラインPRコメントとして自動投稿する |
+| self-report | 自己申告する | "have the agent self-report a confidence score (1-10)" | エージェントに信頼度スコア（1〜10）を自己申告させる |
+| click into | （項目を）クリックして詳細を開く | "developers must click into each finding to read Claude's reasoning" | 開発者はClaudeの推論を読むため各指摘をクリックして開く必要がある |
+| narrative | 説明文形式の、物語的な | "produce narrative paragraphs that must be manually copied" | 手動でコピーする必要がある説明文形式の段落を生成する |
+| tiered | 段階分けされた | "'blocking issues' versus 'suggestions' with tiered review requirements" | 段階分けされたレビュー要件を伴う「ブロッキング事項」対「提案」 |
+| signature (pattern) | シグネチャ、特徴的なパターン | "suppressing findings matching historical false positive signatures" | 過去の誤検知パターンに一致する指摘を抑制する |
+| misrouting | 誤ルーティング、誤った振り分け | "How should you address this misrouting?" | この誤ルーティングにどう対処すべきか |
+| contradicting | 反論する、矛盾する | "contradicting them might damage the relationship" | 顧客に反論することが関係を損なう可能性がある |
+| coordinate (v.) | 調整する、連携させる | "Escalate so a human can coordinate both." | 人間が両方を調整できるようエスカレーションする |
+
+### 頻度メモ（60問中の出現回数）
+
+- **escalate / escalation**: 11回 — カスタマーサポートシナリオの最頻出語。「いつエスカレーションすべきか」を問う設問が多い
+- **most effective**: 27回 — 設問の定型句として圧倒的多数（Section 5参照）
+- **propagate / propagation**: 5回 — エラー伝播パターンの設問で頻出
+- **false positive**: 5回 — CI/CDシナリオの中心テーマ
+- **ambiguous / ambiguity**: 5回 — 曖昧なリクエストへの対処を問う設問で頻出
+- **exemplar**: 5回 — Code Generationシナリオで「模範例」を扱う設問に集中
