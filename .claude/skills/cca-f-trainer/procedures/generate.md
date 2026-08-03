@@ -1,51 +1,69 @@
-# 作成プロセス（generate）— 問題バンクを生成する
+# 作成プロセス（generate）— 問題バンクをHTMLで生成する
 
-このファイルは「**問題を作成する**」経路に入ったときだけ読む。出力は永続バンク `banks/<bank-name>/`（コミット対象）。
-**ここでは出題・採点をしない**（それは `deliver.md`）。重い処理（コーパス読込＋全問セルフチェック）はここに閉じ込め、出題側を高速に保つ。
+このスキルは**作成のみ**を行う（出題・採点は行わない）。出力は永続バンク `banks/<bank-name>/`（コミット対象）で、
+中身は `manifest.json` と、ブラウザでそのまま開いて解ける自己完結 HTML（`quiz.html`）の2点だけ。
+解答・解説は `quiz.html` に埋め込まれる（クイズアプリとして機能させるため、事前に正解を伏せる2ファイル分割は行わない。
+これはチャット経路で出題しないことの引き換えであり、想定利用者は自分自身なので許容する）。
 
-SKILL.md の「共通の不変条件」（カンニング防止の2ファイル分割／正解位置ランダム化／公式仕様・ドメイン重み／コーパス・グラウンディング／trivia 禁止）は**この経路でも全て守る**。以下はその上での作成手順。
+SKILL.md の「共通の不変条件」（正解位置ランダム化／公式仕様・ドメイン重み／コーパス・グラウンディング／trivia 禁止／セルフチェック）は**全て守る**。
 
 ## ステップ G0: 未完バンクの再開チェック（最初に行う）
 
 `banks/*/manifest.json` を読み、`status: "generating"`（生成途中）のバンクがあれば、ユーザに
 「未完のバンク `<name>`（{generated}/{total} 問）があります。続きから生成しますか？」と確認する。
-続けるなら、そのバンクの `quiz-questions.json`／`answer-key.json` を読み込み、**`generated+1` 問目から再開**する（ステップ G3 へ。設定質問はスキップ）。
-新規で作るなら下の G1 へ。
+続けるなら、そのバンクの `quiz.html` から埋め込み済みの `QUESTIONS` 配列を抽出して現状を把握し（下記「HTML からの読み出し」参照）、
+**`generated+1` 問目から再開**する（ステップ G3 へ。設定質問はスキップ）。新規で作るなら下の G1 へ。
+
+### HTML からの読み出し（既出把握・再開の両方で使う共通手順）
+
+`quiz.html` は `const QUESTIONS = [...];` という1行に全問題データを埋め込んでいる。次の Python ワンライナー相当で取り出す。
+
+```python
+import re, json
+text = open('banks/<name>/quiz.html', encoding='utf-8').read()
+m = re.search(r'const QUESTIONS = (\[.*?\]);\n', text, re.S)
+questions = json.loads(m.group(1))  # 各要素に domain/task_statement/scenario_code/difficulty/situation/question/options/correct/explanation を含む
+```
 
 ## ステップ G1: 作成設定（AskUserQuestion 1回・最大4問）
 
 `date +%F` で日付を取得。AskUserQuestion で次を確認する。
 
 1. **対象** — 「新規バンクを作る」／「既存バンクに問題を追加する」
-   - 「既存に追加」→ 次ターンでどのバンクかを1問聞き、その manifest の focus を引き継いで追加する。
+   - 「既存に追加」→ 次ターンでどのバンクかを1問聞き、その manifest の focus・language を引き継いで追加する。
 2. **問題数** — 10 / 20 / **60（フル模試）** / その他
-3. **focus（出題内容）** — 「ドメイン横断（公式重み比例）」／「特定ドメイン集中」／「弱点ターゲット（weakness-log 参照）」
+3. **focus（出題内容）** — 「ドメイン横断（公式重み比例）」／「特定ドメイン集中」／「弱点ターゲット（過去の結果 JSON を参照）」
    - 「特定ドメイン集中」→ 次ターンでどのドメイン（D1〜D5）かを1問聞く。
-   - 「弱点ターゲット」→ `exams/ccar-f/reports/weakness-log.json` を読み、間隔反復スコアの高い task_statement へ出題を寄せる。ログが無ければ「横断」にフォールバックし、その旨を伝える。
-
-**言語はここでは聞かない**（重要）。本番は英語なので、バンクは**常に英語（canonical）で作る**: `stem`・`options.text`、および
-`answer-key.json` の `rationale`・`option_notes` まで**すべて英語**で書く。出題言語（英語のみ／英語問題＋日本語解説／日本語のみ）は
-**解くフェーズ（`deliver.md`）でユーザが選ぶ**。こうすることで1つのバンクを言語の好みに依らず再利用でき、日本語が必要な箇所は出題時に翻訳して提示する。
+   - 「弱点ターゲット」→ `exams/ccar-f/reports/quiz-results/*.json`（無ければ `mkdir -p` だけして空扱い）を全て読み、
+     ドメイン／task_statement 別の誤答率を集計して優先出題する（詳細はステップ G2）。ファイルが1つも無ければ「横断」にフォールバックし、その旨を伝える。
+4. **HTML の言語** — 「英語のみ（本番と同じ）」／「英語の設問＋日本語の解説（推奨）」／「日本語（設問・選択肢も翻訳）」
+   - 出題は静的 HTML なので、**この場で選んだ言語がそのままファイルに焼き込まれる**（後から変更するには再生成が必要）。
+   - 迷ったら「英語の設問＋日本語の解説」を勧める（本番の英語に慣れつつ理解は日本語で深められるため）。
+   - 内部的には `stem`・`options` を選んだ言語で執筆する（英語のみ／英語+日本語解説 は英語で執筆、日本語 は日本語で執筆。技術用語・コード識別子は原語のまま残す）。`explanation` は「英語のみ」なら英語、それ以外は日本語で書く。
 
 回答が揃ったら**バンク名を自動命名**する（例: `mock-60-2026-06-20` / `focus-D2-2026-06-20` / `weakness-2026-06-20`。同名衝突時は `-2` を付す）。
 `banks/<bank-name>/` を作り（`mkdir -p`）、`manifest.json` を初期化する（`question-schema.json` の `bank_manifest` 定義に従う。
-`status:"generating"`・`generated:0`・`total`・`focus`・`domain_distribution` を埋める。`language` は `"en"`（canonical）固定）。
+`status:"generating"`・`generated:0`・`total`・`focus`・`language`・`domain_distribution` を埋める）。
 
 問題数に応じてドメイン配分を決める。横断は**公式重みに比例**（例: 60問なら D1×16, D3×12, D4×12, D2×11, D5×9。20問なら D1×5, D3×4, D4×4, D2×4, D5×3。端数は D1 に寄せる）。
 特定ドメイン集中はそのドメインに全問。弱点ターゲットは弱点 TS の属するドメインへ寄せつつ、公式重みから極端に外れないようにする。
 難易度は **L3（トレードオフ判断）を主軸**に、L2（応用）を従にする。
 
-## ステップ G2: コーパス読込と既出の把握（生成前に1回）
+## ステップ G2: コーパス読込と既出・弱点の把握（生成前に1回）
 
 `blueprint.yaml`・`scenarios.yaml`・`antipattern-playbook.md`・`question-schema.json` を読み込む。
 
-**出題履歴を読み込む（重複防止・最重要）**: `exams/ccar-f/reports/weakness-log.json`（あれば）と
-**既存の全バンクの `banks/*/quiz-questions.json`** を読み、既出の `(task_statement × scenario)` と stem の要旨を一覧化する。
-これを「既出セット」とし、今回の問題が過去のどのバンクとも被らないように生成する。履歴が無ければ全 task_statement から均等に選ぶ。
+**出題履歴を読み込む（重複防止・最重要）**: **既存の全バンクの `banks/*/quiz.html`** から上記「HTML からの読み出し」で `QUESTIONS` を抽出し、
+既出の `(task_statement × scenario)` と stem の要旨を一覧化する。これを「既出セット」とし、今回の問題が過去のどのバンクとも被らないように生成する。
+履歴が無ければ全 task_statement から均等に選ぶ。
+
+**弱点ターゲット時の集計**: `exams/ccar-f/reports/quiz-results/*.json` を全て読み、各ファイルの `results[]`（`domain`/`task_statement`/`scenario`/`is_correct`）を集計する。
+task_statement ごとに次のスコアで優先度をつける: `priority = 2*(誤答率) + 1*(直近ファイルほど重い誤答への重み) + 0.5*(結果ファイルに一度も登場していない task_statement への基礎優先度)`。
+直近の結果ファイルで連続正解している task_statement は優先度を下げる。上位の task_statement を多めに配分する。
 
 ## ステップ G3: バッチ生成（5問ずつ・各バッチ後に保存）
 
-**一度に全部作らない。5問ずつのバッチで生成し、各バッチ後にファイルへ追記して manifest を更新する。**
+**一度に全部作らない。5問ずつのバッチで生成し、各バッチ後に `quiz.html` を再構築して manifest を更新する。**
 こうすると 60 問のような大物でも、途中で止まっても G0 の再開で続けられ、1ターンの作業量も抑えられる。
 
 各問は**必ず次を満たす**こと。満たせない問題は破棄して作り直す。
@@ -55,14 +73,14 @@ SKILL.md の「共通の不変条件」（カンニング防止の2ファイル�
   横断では blueprint の task_statement プール（約30）を**巡回**し、出題回数が少ない／長く出していない TS を優先採用してドメイン内の偏りを解消する（公式ドメイン重みは維持）。
 - **シナリオに包む**: `scenarios.yaml` の原型を選び、その文脈で問う。trivia（用語暗記）禁止。必ず**シナリオ＋制約＋設計判断**の粒度。各 task_statement は複数シナリオで枠付けでき、毎回同じ TS↔シナリオの結びつきに固定しない。
 - **「壊れた本番系を直す」フレーミングを優先する**: 実試験は「ゼロから何を作るか」より、**既に動いている本番系に症状が出ていて、根本原因をどのレイヤーで最小修正するか**を問う。シナリオが許す限り stem を「症状（誤動作・取りこぼし・ハング・スキーマは通るが意味的に誤った値 など）が観測されている → 何を直すべきか」型にする。各シナリオの `failure_framing` を素材に使う。純粋なグリーンフィールドの抽象設問（「どう設計すべきか」だけ）に偏らせない（多様性のため一部は可）。
-- **根拠を紐付ける**: 正解には必ずコーパス内の出典（ファイルパス＋タスクステートメント番号や見出し）を `citations` に記録。根拠を示せない問題は作らない。第一の根拠は Exam Guide のタスクステートメント、補強は公式ブログ・docs。
+- **根拠を紐付ける**: 正解には必ずコーパス内の出典（ファイルパス＋タスクステートメント番号や見出し）を確認できること。根拠を示せない問題は作らない。第一の根拠は Exam Guide のタスクステートメント、補強は公式ブログ・docs。
 - **ディストラクタを「もっともらしいアンチパターン」にする**: `antipattern-playbook.md` から素材を引く。少なくとも1つは「技術的には成立するが設計的に劣る」選択肢にする。頻出トラップ4種（単一スーパーエージェント／文脈自動継承の誤解／CI で `-p` 無し対話実行／高リスクで人間監督を減らす）は特に有効。
 - **誤答は2方向の「設計反射のズレ」を狙う**: 実試験の不正解は知識不足より反射の方向ズレから生まれる。可能なら1問のディストラクタに **(a) 決定論が要る所でソフト指示／プロンプト依存に逃げる型** と **(b) 最小修正で済む所にコンポーネント／上位モデル／コンテキスト窓を足す（over-engineering）型** の両方向を含める。残り1つは「正しい方向だが誤ったレイヤー／粒度」にすると迷いどころが増える。
 - **正解位置をランダム化**: 正解を A 固定にしない。A〜D にばらつかせ、バンク全体で正解分布が概ね均等か生成後に自己チェックする。
-- **タグ付け**: `domain`（D1〜D5）・`task_statement`（例 "1.4"）・`scenario`（S1〜S6）・`difficulty`（L2/L3）。
+- **タグ付け**: `domain`（D1〜D5）・`task_statement`（例 "1.4"）・`scenario_code`（S1〜S6）・`difficulty`（L2/L3）。
 
 **各問のセルフチェック（必須）**: 自作問題の最大リスクは正解キー誤り。別エージェントは使わず、**この場で自己点検**する。
-各問について**自分が書いた `rationale` をいったん伏せ**、コーパス（第一根拠は Exam Guide のタスクステートメント、補強は
+各問について**自分が書いた解説をいったん伏せ**、コーパス（第一根拠は Exam Guide のタスクステートメント、補強は
 `study/official-blog/`・`docs/`・`study/skilljar-courses/`）から最良の選択肢を**ゼロから再導出**し、`correct` と一致するか確認する。
 あわせて ①一意に最良か ②ディストラクタがもっともらしい誤りか ③出典が正解を支持するか ④trivia でないか を点検し、**1つでも満たさなければ修正または作り直す**。
 
@@ -71,22 +89,55 @@ SKILL.md の「共通の不変条件」（カンニング防止の2ファイル�
 - **Prompts suggest; systems enforce（重要ルールはシステムで強制）** — 金銭・本人確認・方針例外など決定論的遵守が要るルールを、プロンプトの指示でなくフック／コード／スキーマ等の**システム側**で強制しているか。
 - **Fix the earliest layer（最も早いレイヤーを最小修正）** — 症状の下流で糊塗せず、根本原因の**最も早いレイヤー**を最小の介入で直しているか。
 
-### バッチごとの保存（2ファイル分割・鉄則1）
+### バッチごとの保存（`quiz.html` の再構築）
 
-各バッチで作った問題を**2ファイルに追記**する。id は通し番号（既存の続きから）。
+各問を次の JS オブジェクト形（`templates/quiz-template.html` の `QUESTIONS` 配列要素）で組み立てる。
 
-- `banks/<name>/quiz-questions.json` — **public 部分のみ**（`bank` メタ＋各問の id/domain/task_statement/scenario/difficulty/stem/options[key,text,label]）。
-  **`is_correct`／`correct`／`rationale`／`citations` を絶対に書かない。**答えは必ず `answer-key.json` のみに置く。
-- `banks/<name>/answer-key.json` — 各問の `correct`／`rationale`／`citations`／各 option の `is_correct`/`tempting`/`why_wrong`。
-  **生成中のチャットに中身（正解・根拠）を出さない**（採点時にだけ読む）。`quiz-questions.json` には絶対に混ぜない。
+```json
+{
+  "n": 1,
+  "scenario": "<scenarios.yaml の name。例 Developer Productivity with Claude>",
+  "domain": "D2",
+  "task_statement": "2.5",
+  "scenario_code": "S4",
+  "difficulty": "L3",
+  "situation": "<シナリオ文脈・状況設定。最後の設問文は含めない>",
+  "question": "<最後の設問文のみ。例 What is the most effective fix?>",
+  "options": [
+    { "letter": "A", "text": "<選択肢全文>", "correct": false },
+    { "letter": "B", "text": "<選択肢全文>", "correct": true },
+    { "letter": "C", "text": "<選択肢全文>", "correct": false },
+    { "letter": "D", "text": "<選択肢全文>", "correct": false }
+  ],
+  "correct": "B",
+  "explanation": "<正解の理由＋他3つがなぜアンチパターンか。設定言語に従う>",
+  "global_n": 1
+}
+```
 
-保存したら `manifest.json` の `generated` を更新し、`quiz-questions.json` の `bank.count` も合わせる。
-**まだ目標数に達していなければ、次のバッチを続ける**（ターンを跨いでよい。1ターンに1〜数バッチ）。
+`id`/`global_n` は通し番号（既存の続きから）。生成手順:
+
+1. **新規バンクの初回バッチ**: `templates/quiz-template.html` を読み、次のプレースホルダを置換して `banks/<name>/quiz.html` に書き出す。
+   - `__TITLE__` → `Claude Certified Architect — Practice Quiz: <バンク名>`
+   - `__TOPBAR_TITLE__` → `CCAR-F Practice — <バンクの説明。例 "Focus: D2 Tool Design & MCP (20Q)">`
+   - `__BANK_NAME__` → バンク名（JS 文字列リテラルとして安全な形。ダブルクォートや `</script>` を含めない）
+   - `__RESULTS_HINT_PATH__` → `exams/ccar-f/reports/quiz-results/`（リポジトリルートからの相対パス。バックスラッシュ等の JS 特殊文字はエスケープ）
+   - `__QUESTIONS_JSON__` → その時点までに生成した全問題（このバッチ分のみ）を `json.dumps(questions, ensure_ascii=False)` した文字列
+2. **2バッチ目以降・再開時**: 既存の `quiz.html` から「HTML からの読み出し」で現在の `QUESTIONS` を取り出し、新バッチ分を末尾に追加し、
+   同じテンプレートで**ファイル全体を作り直す**（プレースホルダの再置換ではなく、`QUESTIONS` 配列だけを更新すればよい）。
+3. 保存したら `manifest.json` の `generated` を更新する。**まだ目標数に達していなければ、次のバッチを続ける**（ターンを跨いでよい。1ターンに1〜数バッチ）。
+
+日本語出力を選んだ場合、`situation`/`question`/`options[].text` を自然な日本語で書く（技術用語・コード識別子・固有名詞は原語のまま）。
+「英語+日本語解説」の場合は `situation`/`question`/`options[].text` を英語、`explanation` のみ日本語にする。
 
 ## ステップ G4: 完成
 
 `generated == total` になったら `manifest.json` の `status` を `"ready"` にする。
-最後にバンク全体で**正解分布が特定キーに偏っていないか**を自己チェックする。
+最後にバンク全体で**正解分布が特定キーに偏っていないか**を自己チェックする（`quiz.html` の `QUESTIONS` を読み出して `correct` の分布を数える）。
 
-ユーザに**完成を一言で報告**する（バンク名・問題数・ドメイン配分・focus）。**正解や解説はチャットに出さない。**
-続けて「解くには `/cca-f-trainer` で『問題を解く』を選び、このバンクを指定してください。**言語（英語のみ／英語問題＋日本語解説／日本語のみ）はそのとき選べます**」と案内する。
+ユーザに**完成を一言で報告**する（バンク名・問題数・ドメイン配分・focus・言語）。続けて次を案内する:
+
+- 「`banks/<name>/quiz.html` をブラウザで開いて解いてください（ダブルクリックで開けます）」
+- 「解き終えたら『Finish & Review』画面に2つのダウンロードボタンがあります」
+  - 「**Download Results (JSON)**」→ `exams/ccar-f/reports/quiz-results/` に保存すると、次に弱点ターゲットのバンクを作るときこのフォルダの全ファイルを自動集計する（この skill 専用の簡素なコード形式）
+  - 「**Download for AI Analysis (Markdown)**」→ 設問・選択肢・自分の回答・正解・解説を全問ぶん人が読める形でまとめたファイル。保存場所は問わず、このチャットや他の AI チャットにそのまま貼って「弱点と次にやるべきことを分析して」のように使える

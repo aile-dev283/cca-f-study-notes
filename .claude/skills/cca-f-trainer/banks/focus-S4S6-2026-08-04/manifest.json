@@ -14,5 +14,5 @@
   "total": 20,
   "generated": 20,
   "status": "ready",
-  "source": "scenario-focus S4 (Developer Productivity with Claude) + S6 (Structured Data Extraction) — not covered by existing practical_test_en.html mock (which covers S1/S2/S3/S5 only)"
+  "source": "scenario-focus S4 (Developer Productivity with Claude) + S6 (Structured Data Extraction) — not covered by existing practical_test_en.html mock (which covers S1/S2/S3/S5 only); migrated to quiz.html format"
 }

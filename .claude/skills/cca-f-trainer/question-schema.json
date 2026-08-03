@@ -1,19 +1,19 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "CCAR-F Trainer schemas",
-  "description": "問題は永続「バンク」（banks/<name>/、コミット対象）に保存し、出題は単発「ラン」（sessions/<dir>/、gitignore）で行う。カンニング防止のため、バンク内でも出題前ファイルと正解ファイルを分離する：quiz-questions.json は public（正解なし）、answer-key.json は別ファイルに平文保存。manifest.json はバンクのメタと生成進捗（再開用）。progress.json はランの現在地で、毎ターン読み直して脱線を防ぐ。weakness-log はセッション横断の成績蓄積。",
+  "description": "問題は永続「バンク」（banks/<name>/、コミット対象）に保存する。各バンクは manifest.json（メタ・生成進捗）と quiz.html（自己完結の出題HTML。QUESTIONS 配列に問題・選択肢・正解・解説を全て埋め込む）の2点だけで構成される。出題・採点はブラウザ上の quiz.html が行うため、Claude Code 側に出題プロセスは存在しない。quiz.html の『Download Results (JSON)』で書き出される結果ファイルは quiz_result のスキーマに従い、exams/ccar-f/reports/quiz-results/（gitignore 済み）に手動で保存すると、次回の弱点ターゲット生成がそれらを集計する。",
 
   "definitions": {
 
     "bank_manifest": {
-      "title": "banks/<name>/manifest.json（バンクのメタ＋生成進捗。作成プロセスが書き、出題プロセスが読む）",
+      "title": "banks/<name>/manifest.json（バンクのメタ＋生成進捗。作成プロセスが書き、再開時に読む）",
       "type": "object",
-      "required": ["name", "created_date", "focus", "total", "generated", "status"],
+      "required": ["name", "created_date", "focus", "language", "total", "generated", "status"],
       "properties": {
         "name": { "type": "string", "description": "バンク名＝ディレクトリ名。例 mock-60-2026-06-20 / focus-D2-2026-06-20 / weakness-2026-06-20" },
         "created_date": { "type": "string", "description": "YYYY-MM-DD" },
-        "language": { "type": "string", "enum": ["en"], "default": "en", "description": "バンクの authoring 言語。本番が英語なので常に en（canonical）で生成する。出題言語は解くフェーズ（deliver）で選ぶため、ここには焼き込まない。" },
-        "focus": { "type": "string", "enum": ["mixed", "domain-focus", "weakness"], "description": "mixed=公式重み比例の横断 / domain-focus=特定ドメイン集中 / weakness=weakness-log を元に弱点ターゲット" },
+        "language": { "type": "string", "enum": ["en", "en-q-ja-explain", "ja"], "description": "quiz.html に焼き込まれた出題言語。en=英語のみ / en-q-ja-explain=英語の設問＋日本語解説 / ja=設問・選択肢も日本語。生成時に選び、後から変えるには再生成が必要。" },
+        "focus": { "type": "string", "enum": ["mixed", "domain-focus", "weakness"], "description": "mixed=公式重み比例の横断 / domain-focus=特定ドメイン集中 / weakness=quiz-results/ を集計した弱点ターゲット" },
         "focus_domain": { "type": ["string", "null"], "enum": ["D1", "D2", "D3", "D4", "D5", null], "description": "focus=domain-focus のとき対象ドメイン" },
         "domain_distribution": {
           "type": "object",
@@ -22,148 +22,70 @@
         },
         "total": { "type": "integer", "minimum": 1, "description": "完成時の総問題数（目標）" },
         "generated": { "type": "integer", "minimum": 0, "description": "生成済み問題数。バッチ生成・中断再開のために各バッチ後に更新する" },
-        "status": { "type": "string", "enum": ["generating", "ready"], "description": "generating=生成途中（再開可能） / ready=完成して出題可能" },
-        "source": { "type": ["string", "null"], "description": "出典・由来。例 \"blueprint 横断\" / \"weakness-log 2026-06-19 時点\" / 元レポートのパス" }
+        "status": { "type": "string", "enum": ["generating", "ready"], "description": "generating=生成途中（再開可能） / ready=完成して quiz.html がそのまま解ける" },
+        "source": { "type": ["string", "null"], "description": "出典・由来。例 \"blueprint 横断\" / \"quiz-results/ 2026-08-04 時点の弱点集計\"" }
       }
     },
 
-    "session_progress": {
-      "title": "progress.json（ランの現在地。記憶に頼らず毎ターン読み直す。出題プロセス専用）",
+    "quiz_html_question": {
+      "title": "quiz.html 内 QUESTIONS 配列の各要素（templates/quiz-template.html が読む形。作成プロセスが埋め込む）",
       "type": "object",
-      "required": ["session_dir", "bank", "mode", "total", "answered", "next_index", "phase"],
+      "required": ["n", "scenario", "domain", "task_statement", "scenario_code", "difficulty", "situation", "question", "options", "correct", "explanation", "global_n"],
       "properties": {
-        "session_dir": { "type": "string", "description": "例 2026-06-18-2008" },
-        "bank": { "type": "string", "description": "このランが解いているバンク名（banks/<name>/）。出題・採点はこのバンクの quiz-questions.json / answer-key.json を読む" },
-        "question_ids": { "type": "array", "items": { "type": "integer" }, "description": "バンクから選んだ出題対象の id 列（全問なら全 id、部分出題なら部分集合・出題順）。next_index はこの列上の位置で進める" },
-        "mode": { "type": "string", "enum": ["drill", "mock"], "description": "feedback_mode と同義。drill=1問ずつ即解説 / mock=4問ずつ一括採点" },
-        "language": { "type": "string", "enum": ["en-q-ja-explain", "en", "ja"], "description": "出題言語。解くフェーズ（deliver）でユーザが選ぶ。バンクは英語 canonical なので、ja は提示時に翻訳、en-q-ja-explain は解説のみ日本語にする" },
-        "total": { "type": "integer", "minimum": 1, "description": "このランで解く問題数（question_ids の長さ）" },
-        "answered": { "type": "integer", "minimum": 0, "description": "回収済み回答数" },
-        "next_index": { "type": "integer", "minimum": 1, "description": "次に出題／採点する問の位置（question_ids 上で1始まり）" },
-        "phase": { "type": "string", "enum": ["setup", "asking", "grading", "report", "done"], "description": "ランの現在段階。各アクションのたびに更新する（生成はバンク側 manifest.status で管理）" }
-      }
-    },
-
-    "quiz_questions_public": {
-      "title": "banks/<name>/quiz-questions.json（作成プロセスが書くバンクの問題本体。正解・解説・出典・is_correct を含めない）",
-      "type": "object",
-      "required": ["bank", "questions"],
-      "properties": {
-        "bank": {
-          "type": "object",
-          "description": "バンクのメタ（manifest.json と整合させる）。feedback_mode は出題プロセス側で選ぶためここには含めない。",
-          "required": ["name", "date", "focus"],
-          "properties": {
-            "name": { "type": "string", "description": "バンク名＝ディレクトリ名" },
-            "date": { "type": "string", "description": "YYYY-MM-DD" },
-            "language": { "type": "string", "enum": ["en"], "default": "en", "description": "バンクは英語 canonical。出題言語は解く時に選ぶ。" },
-            "focus": { "type": "string", "enum": ["mixed", "domain-focus", "weakness"] },
-            "focus_domain": { "type": ["string", "null"], "enum": ["D1", "D2", "D3", "D4", "D5", null] },
-            "count": { "type": "integer", "minimum": 1, "description": "現時点で含まれる問題数（生成途中は generated と一致）" },
-            "multi_select_variant": { "type": "boolean", "default": false, "description": "true の場合のみ複数正解バリアント。本番には無い旨を明示すること。" }
+        "n": { "type": "integer", "description": "1始まりの通し番号（global_n と同じ値）" },
+        "scenario": { "type": "string", "description": "scenarios.yaml の name（表示用。例 \"Developer Productivity with Claude\"）" },
+        "domain": { "type": "string", "enum": ["D1", "D2", "D3", "D4", "D5"] },
+        "task_statement": { "type": "string", "description": "例 \"1.4\"。blueprint.yaml に対応" },
+        "scenario_code": { "type": "string", "enum": ["S1", "S2", "S3", "S4", "S5", "S6"] },
+        "difficulty": { "type": "string", "enum": ["L2", "L3"], "description": "L3=トレードオフ判断を主軸" },
+        "situation": { "type": "string", "description": "シナリオ文脈・状況設定（最後の設問文は含めない）。trivia 禁止。" },
+        "question": { "type": "string", "description": "最後の設問文のみ（例 \"What is the most effective fix?\"）" },
+        "options": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "description": "正解位置はランダム化する（A 固定にしない）。各要素に correct（bool）を含む——quiz.html は自己完結アプリなので事前に正解を伏せるファイル分割はしない。",
+          "items": {
+            "type": "object",
+            "required": ["letter", "text", "correct"],
+            "properties": {
+              "letter": { "type": "string", "enum": ["A", "B", "C", "D"] },
+              "text": { "type": "string", "description": "選択肢の全文" },
+              "correct": { "type": "boolean" }
+            }
           }
         },
-        "questions": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["id", "domain", "task_statement", "scenario", "difficulty", "stem", "options"],
-            "properties": {
-              "id": { "type": "integer", "description": "1始まりの通し番号" },
-              "domain": { "type": "string", "enum": ["D1", "D2", "D3", "D4", "D5"] },
-              "task_statement": { "type": "string", "description": "例 \"1.4\"。blueprint.yaml に対応" },
-              "scenario": { "type": "string", "enum": ["S1", "S2", "S3", "S4", "S5", "S6"] },
-              "difficulty": { "type": "string", "enum": ["L2", "L3"], "description": "L3=トレードオフ判断を主軸" },
-              "stem": { "type": "string", "description": "シナリオ文脈＋設問。単一正解で答えられる形。trivia 禁止。" },
-              "options": {
-                "type": "array",
-                "minItems": 4,
-                "maxItems": 4,
-                "description": "正解位置はランダム化する（A 固定にしない）。is_correct はここに書かない。",
-                "items": {
-                  "type": "object",
-                  "required": ["key", "text"],
-                  "properties": {
-                    "key": { "type": "string", "enum": ["A", "B", "C", "D"] },
-                    "text": { "type": "string", "description": "選択肢の全文。AskUserQuestion の description に入れる。" },
-                    "label": { "type": "string", "description": "短い見出し（任意）。AskUserQuestion の label 用。" }
-                  }
-                }
-              }
-            }
-          }
-        }
+        "correct": { "type": "string", "enum": ["A", "B", "C", "D"] },
+        "explanation": { "type": "string", "description": "正解の理由＋他3つがなぜアンチパターンか。バンクの language 設定に従う言語で書く。" },
+        "global_n": { "type": "integer", "description": "n と同じ値。quiz.html 内の state.answers のキーに使われる。" }
       }
     },
 
-    "answer_key": {
-      "title": "answer-key（別ファイル answer-key.json に平文保存。採点時に読む）",
+    "quiz_result": {
+      "title": "exams/ccar-f/reports/quiz-results/<bank>-results-<timestamp>.json（quiz.html の Download Results ボタンが生成。手動でこのフォルダに保存する）",
       "type": "object",
-      "required": ["keys"],
+      "required": ["bank", "generated_at", "total", "answered", "correct", "results"],
       "properties": {
-        "keys": {
+        "bank": { "type": "string", "description": "解いたバンク名（banks/<name>/ に対応）" },
+        "generated_at": { "type": "string", "description": "ISO 8601 日時（ダウンロード時刻）" },
+        "total": { "type": "integer", "minimum": 1, "description": "バンクの総問題数" },
+        "answered": { "type": "integer", "minimum": 0, "description": "回答済み問題数（無回答は含まない）" },
+        "correct": { "type": "integer", "minimum": 0, "description": "正答数" },
+        "results": {
           "type": "array",
+          "description": "1問1エントリ。弱点ターゲット生成の集計に使う。",
           "items": {
             "type": "object",
-            "required": ["id", "correct", "rationale", "citations", "option_notes"],
+            "required": ["id", "domain", "task_statement", "scenario", "difficulty", "user_choice", "correct_choice", "is_correct"],
             "properties": {
-              "id": { "type": "integer", "description": "quiz-questions.json の id に対応" },
-              "correct": { "type": "string", "enum": ["A", "B", "C", "D"] },
-              "rationale": { "type": "string", "description": "正解の理由＋他3つがなぜアンチパターンか。語学設定に従う。" },
-              "citations": {
-                "type": "array",
-                "minItems": 1,
-                "description": "正解の根拠。空なら問題を破棄。",
-                "items": {
-                  "type": "object",
-                  "required": ["path", "locator"],
-                  "properties": {
-                    "path": { "type": "string", "description": "リポジトリ内の実ファイルパス" },
-                    "locator": { "type": "string", "description": "タスクステートメント番号や見出し等" }
-                  }
-                }
-              },
-              "option_notes": {
-                "type": "array",
-                "description": "各選択肢の正誤と、誤答の tempting/why_wrong。解説に使う。",
-                "items": {
-                  "type": "object",
-                  "required": ["key", "is_correct"],
-                  "properties": {
-                    "key": { "type": "string", "enum": ["A", "B", "C", "D"] },
-                    "is_correct": { "type": "boolean" },
-                    "tempting": { "type": "string", "description": "なぜ魅力的か（誤答のみ）" },
-                    "why_wrong": { "type": "string", "description": "なぜ劣る/誤りか（誤答のみ）" }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-
-    "weakness_log": {
-      "title": "exams/ccar-f/reports/weakness-log.json（セッション横断で追記蓄積）",
-      "type": "object",
-      "required": ["entries"],
-      "properties": {
-        "entries": {
-          "type": "array",
-          "description": "1問1エントリで append する。弱点復習モードの間隔反復に使う。",
-          "items": {
-            "type": "object",
-            "required": ["date", "session_dir", "question_id", "domain", "task_statement", "scenario", "difficulty", "correct"],
-            "properties": {
-              "date": { "type": "string", "description": "YYYY-MM-DD" },
-              "session_dir": { "type": "string", "description": "出典セッション（例 2026-06-18-2008）" },
-              "question_id": { "type": "integer" },
-              "domain": { "type": "string", "enum": ["D1", "D2", "D3", "D4", "D5"] },
-              "task_statement": { "type": "string" },
-              "scenario": { "type": "string", "enum": ["S1", "S2", "S3", "S4", "S5", "S6"] },
-              "difficulty": { "type": "string", "enum": ["L2", "L3"] },
-              "correct": { "type": "boolean", "description": "正答なら true" },
-              "user_choice": { "type": "string", "enum": ["A", "B", "C", "D"] }
+              "id": { "type": "integer", "description": "quiz.html の global_n に対応" },
+              "domain": { "type": ["string", "null"], "enum": ["D1", "D2", "D3", "D4", "D5", null] },
+              "task_statement": { "type": ["string", "null"] },
+              "scenario": { "type": ["string", "null"], "enum": ["S1", "S2", "S3", "S4", "S5", "S6", null] },
+              "difficulty": { "type": ["string", "null"], "enum": ["L2", "L3", null] },
+              "user_choice": { "type": ["string", "null"], "enum": ["A", "B", "C", "D", null], "description": "null は無回答" },
+              "correct_choice": { "type": "string", "enum": ["A", "B", "C", "D"] },
+              "is_correct": { "type": "boolean" }
             }
           }
         }
