@@ -4,7 +4,7 @@
 設計的に優れている**状態。各ディストラクタには「なぜ魅力的か（tempting）」と「なぜ劣るか（why_wrong）」を
 言語化できること——これがそのまま解説の `rationale` になる。
 
-出典は `cca-f/CCA-F_Certification_Exam_Guide.md` の各タスクの "Avoiding anti-patterns" と、正解の裏返し。
+出典は `exams/ccar-f/CCAR-F_Certification_Exam_Guide.md` の各タスクの "Avoiding anti-patterns" と、正解の裏返し。
 
 ---
 

@@ -1,6 +1,6 @@
 # Anthropic Academy Course Catalog
 
-> 原本PDF: `cca-f/_originals/Anthropic_Academy_Course_Catalog.pdf`  
+> 原本PDF: `study/_originals/Anthropic_Academy_Course_Catalog.pdf`  
 > 全コース: anthropic.skilljar.com
 
 ---
@@ -37,9 +37,9 @@
 
 ---
 
-## CCA-F との対応
+## CCAR-F との対応
 
-CCA-F 受験には Skilljar の **200 レベルコースをすべて完了** していることが公式前提条件。
+CCAR-F 受験には Skilljar の **200 レベルコースをすべて完了** していることが公式前提条件。
 
 | フェーズ | 対応コース |
 |---------|-----------|

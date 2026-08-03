@@ -32,7 +32,7 @@ AskUserQuestion で次の4問を確認する（**言語はここで選ぶ**の�
    - `drill` は1問ごとに即座に正誤＋解説。`mock` は4問ずつ出題し全問回収後に一括採点。
 
 **出題順**は既定で「バンクの順番どおり」。ただしバンクの focus が weakness の場合、またはユーザが「弱点優先で」と希望した場合は、
-`cca-f/reports/weakness-log.json` を参照して弱点 TS の問題を前に並べる（5問目を増やさず、既定＋希望で対応）。
+`exams/ccar-f/reports/weakness-log.json` を参照して弱点 TS の問題を前に並べる（5問目を増やさず、既定＋希望で対応）。
 
 回答後、`date +%Y-%m-%d-%H%M` で `sessions/<run>/` を作り（`mkdir -p`）、`progress.json` を初期化する
 （`question-schema.json` の `session_progress` 定義に従う。`bank`・`question_ids`（選んだ id 列・出題順）・`language`（**上で選んだ値**）・`mode`・`total`・`answered:0`・`next_index:1`・`phase:"asking"`）。
@@ -88,16 +88,16 @@ AskUserQuestion で次の4問を確認する（**言語はここで選ぶ**の�
 - **次回の推奨（追加生成への橋渡し）**: 弱点ドメイン／サブドメインを示し、**次に作るべきバンクを推奨だけ提示**する（例「次は `/cca-f-trainer` の『問題を作成する』で "弱点ターゲット 10問" または "D2 集中 10問" バンクを作るとよい」）。
   ここで**自動生成はしない**（出題パスに重い生成を混ぜず高速を保つため）。ユーザが改めて作成プロセスを起動する。
 
-レポートは `cca-f/reports/<YYYY-MM-DD>-session.md` に保存（同日複数回は `-2`,`-3` のサフィックス）。要点をチャットに提示する。
+レポートは `exams/ccar-f/reports/<YYYY-MM-DD>-session.md` に保存（同日複数回は `-2`,`-3` のサフィックス）。要点をチャットに提示する。
 `progress.json` の `phase` を `done` にする。最後に**弱点ログを更新**する（次項）。
 
 ## ステップ D5: セッション横断の弱点トラッキング（間隔反復）
 
-`cca-f/reports/weakness-log.json` に各問の結果を**追記蓄積**する。これにより弱点ターゲットの作成・弱点優先の出題順が回を重ねるほど賢くなる。
+`exams/ccar-f/reports/weakness-log.json` に各問の結果を**追記蓄積**する。これにより弱点ターゲットの作成・弱点優先の出題順が回を重ねるほど賢くなる。
 
 - 1問ごとに次を記録: `date`・`session_dir`・`question_id`・`domain`・`task_statement`・`scenario`・`difficulty`・`correct`(bool)・`user_choice`。
 - ファイルが無ければ新規作成。`question-schema.json` の `weakness_log` 定義に従う。
 - **間隔反復スコア**（弱点優先の出題順・弱点ターゲット生成が利用）: 各 task_statement について
   「直近で間違えた」「誤答回数が多い」「正答率が低い」「長く出題していない」ものを優先スコア化する。
   具体例: `priority = 2*(誤答率) + 1*(最後に誤答してからの経過セッション数の少なさ) + 0.5*(未出題期間)`。直近で連続正解した TS は優先度を下げる。
-- weakness-log とレポートは個人の学習記録のため `cca-f/reports/.gitignore` でコミット対象外（ディレクトリは `.gitkeep` で保持）。
+- weakness-log とレポートは個人の学習記録のため `exams/ccar-f/reports/.gitignore` でコミット対象外（ディレクトリは `.gitkeep` で保持）。

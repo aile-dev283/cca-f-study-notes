@@ -1,20 +1,20 @@
 ---
 name: cca-f-trainer
 description: >-
-  CCA-F（Claude Certified Architect – Foundations）試験対策の問題演習トレーナー。
+  CCAR-F（Claude Certified Architect – Foundations）試験対策の問題演習トレーナー。
   このリポジトリのコーパス（Exam Guide・公式ブログ7本・Skilljarノート11本・Claude Code docs 148本）に
   グラウンディングしてシナリオベースの単一正解問題を生成し（作成プロセス）、永続バンクに保存。
   そのバンクから AskUserQuestion で出題・採点し、ドメイン別の弱点分析と「リポジトリ内の復習先ファイルパス」付き
-  レポートを出力する（出題プロセス）。ユーザが「CCA-F」「練習問題を出して」「模試」「mock exam」「問題演習」
+  レポートを出力する（出題プロセス）。ユーザが「CCAR-F」「CCA-F」「練習問題を出して」「模試」「mock exam」「問題演習」
   「問題を作って／作成」「弱点復習」「ドメイン別に出題」「試験対策」「過去問」「クイズして」などと言ったとき、
-  また CCA-F の特定ドメイン（Agentic / MCP / Claude Code / Prompt / Context）の理解度を測りたい・鍛えたいと
+  また CCAR-F の特定ドメイン（Agentic / MCP / Claude Code / Prompt / Context）の理解度を測りたい・鍛えたいと
   述べたときは必ずこのスキルを使うこと。単発の用語確認ではなく、設計判断を問う本番形式の演習・問題作成を行いたい場面で強くトリガーする。
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion, TaskCreate, TaskUpdate
 ---
 
-# CCA-F Trainer
+# CCAR-F Trainer
 
-CCA-F 試験対策の問題演習トレーナー。**自作問題の最大リスクは「正解キーが間違っていること」**なので、
+CCAR-F 試験対策の問題演習トレーナー（スキル名は歴史的経緯で `cca-f-trainer` のまま）。**自作問題の最大リスクは「正解キーが間違っていること」**なので、
 このスキルは「コーパスに根拠を持つ問題だけを、生成時のセルフチェックを通してから出題する」ことを最優先に設計されている。
 
 ## このスキルは「作成」と「出題」の2プロセスに分かれている
@@ -44,7 +44,7 @@ CCA-F 試験対策の問題演習トレーナー。**自作問題の最大リス
 
 これらは作成・出題のどちらでも崩してはいけない前提。各プロセスファイルはこれを前提に書かれている。
 
-### 公式仕様（Exam Guide `cca-f/CCA-F_Certification_Exam_Guide.md` の確定事項）
+### 公式仕様（Exam Guide `exams/ccar-f/CCAR-F_Certification_Exam_Guide.md` の確定事項）
 
 | 項目 | 確定事項 | 実装 |
 |---|---|---|
@@ -89,4 +89,4 @@ CCA-F 試験対策の問題演習トレーナー。**自作問題の最大リス
 - `report-template.md` — レポート雛形。出題プロセスのレポートで使う。
 - `banks/` — **永続バンク（コミット対象）**。各バンク `banks/<name>/` に `manifest.json`・`quiz-questions.json`・`answer-key.json`。
 - `sessions/` — **出題ランの作業領域（gitignore 済み）**。各ラン `sessions/<YYYY-MM-DD-HHMM>/` に `progress.json`（現在地・解いているバンクを参照）・`answers.json`。
-- 出力: レポート `cca-f/reports/<YYYY-MM-DD>-session.md`、弱点ログ `cca-f/reports/weakness-log.json`（どちらも gitignore 済み）。
+- 出力: レポート `exams/ccar-f/reports/<YYYY-MM-DD>-session.md`、弱点ログ `exams/ccar-f/reports/weakness-log.json`（どちらも gitignore 済み）。

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "CCA-F Trainer schemas",
+  "title": "CCAR-F Trainer schemas",
   "description": "問題は永続「バンク」（banks/<name>/、コミット対象）に保存し、出題は単発「ラン」（sessions/<dir>/、gitignore）で行う。カンニング防止のため、バンク内でも出題前ファイルと正解ファイルを分離する：quiz-questions.json は public（正解なし）、answer-key.json は別ファイルに平文保存。manifest.json はバンクのメタと生成進捗（再開用）。progress.json はランの現在地で、毎ターン読み直して脱線を防ぐ。weakness-log はセッション横断の成績蓄積。",
 
   "definitions": {
@@ -144,7 +144,7 @@
     },
 
     "weakness_log": {
-      "title": "cca-f/reports/weakness-log.json（セッション横断で追記蓄積）",
+      "title": "exams/ccar-f/reports/weakness-log.json（セッション横断で追記蓄積）",
       "type": "object",
       "required": ["entries"],
       "properties": {

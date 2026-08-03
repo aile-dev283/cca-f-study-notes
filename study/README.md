@@ -1,11 +1,11 @@
 <!-- markdownlint-disable -->
 
-# CCA-F 学習コース一覧
+# CCAR-F 学習コース一覧
 
 Anthropic Skilljar の全コースおよび公式ブログの試験対策まとめ。  
-試験概要・ドメイン構成・出題シナリオは [リポジトリ直下の README](../README.md) を参照。
+試験概要・ドメイン構成・出題シナリオは [リポジトリ直下の README](../README.md) を参照。Exam Guide 本体は [`../exams/ccar-f/`](../exams/ccar-f/) を参照。
 
-直下に日本語版を正として配置し、英語原文は `_originals/` 配下に同じ構成で置いている（`_` 接頭は「補助・参照用」を表す）。
+直下に日本語版を正として配置し、英語原文は `_originals/` 配下に同じ構成で置いている（`_` 接頭は「補助・参照用」を表す）。ファイル名は phase 番号ではなく講座名スラッグを使用している（学習順序は下表の # 列を参照）。
 
 | ディレクトリ | 出典 | 対応フェーズ |
 |------------|------|------------|
@@ -13,7 +13,7 @@ Anthropic Skilljar の全コースおよび公式ブログの試験対策まと�
 | [`official-blog/`](official-blog/) | Anthropic 公式ブログ／Docs（日本語） | Phase 4 |
 | [`_originals/`](_originals/) | 上記各ファイルの英語原文（補助） | — |
 
-公式の試験ガイド原本（PDF）も `_originals/` に置いている: [`CCA-F_Certification_Exam_Guide.pdf`](_originals/CCA-F_Certification_Exam_Guide.pdf)（パートナー登録後にダウンロード可）。
+公式の試験ガイド原本（PDF）は [`../exams/ccar-f/_originals/CCAR-F_Certification_Exam_Guide.pdf`](../exams/ccar-f/_originals/CCAR-F_Certification_Exam_Guide.pdf) に置いている（パートナー登録後にダウンロード可）。
 
 ---
 
@@ -25,8 +25,8 @@ Claudeをエンドユーザー目線で把握する。
 
 | # | コース | レッスン数 | ドメイン | ファイル |
 |---|--------|-----------|---------|--------|
-| 1 | [Claude 101](https://anthropic.skilljar.com/claude-101) | 14 | D4 | [phase0-01-claude-101.md](skilljar-courses/phase0-01-claude-101.md) |
-| 2 | [Introduction to Claude Cowork](https://anthropic.skilljar.com/introduction-to-claude-cowork) | 15 | D4 | [phase0-02-claude-cowork.md](skilljar-courses/phase0-02-claude-cowork.md) |
+| 1 | [Claude 101](https://anthropic.skilljar.com/claude-101) | 14 | D4 | [claude-101.md](skilljar-courses/claude-101.md) |
+| 2 | [Introduction to Claude Cowork](https://anthropic.skilljar.com/introduction-to-claude-cowork) | 15 | D4 | [claude-cowork.md](skilljar-courses/claude-cowork.md) |
 
 ### Phase 1 — 開発基盤
 
@@ -34,9 +34,9 @@ Claudeプラットフォームの全体像→思考フレームワーク→API�
 
 | # | コース | レッスン数 | ドメイン | ファイル |
 |---|--------|-----------|---------|--------|
-| 1 | [Claude Platform 101](https://anthropic.skilljar.com/claude-platform-101) | 14 | D1, D4, D5 | [phase1-01-claude-platform-101.md](skilljar-courses/phase1-01-claude-platform-101.md) |
-| 2 | [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) | 15 | D4, D5 | [phase1-02-ai-fluency.md](skilljar-courses/phase1-02-ai-fluency.md) |
-| 3 | [Building with the Claude API](https://anthropic.skilljar.com/claude-with-the-anthropic-api) | 85 | D1, D4, D5 | [phase1-03-building-with-api.md](skilljar-courses/phase1-03-building-with-api.md) |
+| 1 | [Claude Platform 101](https://anthropic.skilljar.com/claude-platform-101) | 14 | D1, D4, D5 | [claude-platform-101.md](skilljar-courses/claude-platform-101.md) |
+| 2 | [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) | 15 | D4, D5 | [ai-fluency.md](skilljar-courses/ai-fluency.md) |
+| 3 | [Building with the Claude API](https://anthropic.skilljar.com/claude-with-the-anthropic-api) | 85 | D1, D4, D5 | [building-with-claude-api.md](skilljar-courses/building-with-claude-api.md) |
 
 ### Phase 2 — MCP & Agentic
 
@@ -44,9 +44,9 @@ D1（27%）＋ D2（18%）で合計45%。最重要フェーズ。
 
 | # | コース | レッスン数 | ドメイン | ファイル |
 |---|--------|-----------|---------|--------|
-| 1 | [Introduction to Model Context Protocol](https://anthropic.skilljar.com/introduction-to-model-context-protocol) | 14 | D2 | [phase2-01-mcp-intro.md](skilljar-courses/phase2-01-mcp-intro.md) |
-| 2 | [Model Context Protocol: Advanced Topics](https://anthropic.skilljar.com/model-context-protocol-advanced-topics) | 15 | D2 | [phase2-02-mcp-advanced.md](skilljar-courses/phase2-02-mcp-advanced.md) |
-| 3 | [Introduction to subagents](https://anthropic.skilljar.com/introduction-to-subagents) | 4 | D1 | [phase2-03-subagents-intro.md](skilljar-courses/phase2-03-subagents-intro.md) |
+| 1 | [Introduction to Model Context Protocol](https://anthropic.skilljar.com/introduction-to-model-context-protocol) | 14 | D2 | [mcp-introduction.md](skilljar-courses/mcp-introduction.md) |
+| 2 | [Model Context Protocol: Advanced Topics](https://anthropic.skilljar.com/model-context-protocol-advanced-topics) | 15 | D2 | [mcp-advanced-topics.md](skilljar-courses/mcp-advanced-topics.md) |
+| 3 | [Introduction to subagents](https://anthropic.skilljar.com/introduction-to-subagents) | 4 | D1 | [subagents-intro.md](skilljar-courses/subagents-intro.md) |
 
 ### Phase 3 — Claude Code
 
@@ -54,9 +54,9 @@ D1（27%）＋ D2（18%）で合計45%。最重要フェーズ。
 
 | # | コース | レッスン数 | ドメイン | ファイル |
 |---|--------|-----------|---------|--------|
-| 1 | [Claude Code 101](https://anthropic.skilljar.com/claude-code-101) | 13 | D3 | [phase3-01-claude-code-101.md](skilljar-courses/phase3-01-claude-code-101.md) |
-| 2 | [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action) | 21 | D3 | [phase3-02-claude-code-action.md](skilljar-courses/phase3-02-claude-code-action.md) |
-| 3 | [Introduction to agent skills](https://anthropic.skilljar.com/introduction-to-agent-skills) | 6 | D3 | [phase3-03-agent-skills.md](skilljar-courses/phase3-03-agent-skills.md) |
+| 1 | [Claude Code 101](https://anthropic.skilljar.com/claude-code-101) | 13 | D3 | [claude-code-101.md](skilljar-courses/claude-code-101.md) |
+| 2 | [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action) | 21 | D3 | [claude-code-in-action.md](skilljar-courses/claude-code-in-action.md) |
+| 3 | [Introduction to agent skills](https://anthropic.skilljar.com/introduction-to-agent-skills) | 6 | D3 | [agent-skills-intro.md](skilljar-courses/agent-skills-intro.md) |
 
 ### Phase 4 — 公式ブログ補強
 
@@ -64,17 +64,17 @@ D1（27%）＋ D2（18%）で合計45%。最重要フェーズ。
 
 | # | 内容 | 対応ドメイン | 優先度 | ファイル |
 |---|------|------------|--------|--------|
-| 1 | [Building agents with the Claude Agent SDK](https://claude.com/blog/building-agents-with-the-claude-agent-sdk) | D1/D3/D5 | S | [official-blog/01-building-agents-with-sdk.md](official-blog/01-building-agents-with-sdk.md) |
-| 2 | [Writing effective tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | D2/D4 | S | [official-blog/02-writing-effective-tools.md](official-blog/02-writing-effective-tools.md) |
-| 3 | [Code execution with MCP: Building more efficient agents](https://www.anthropic.com/engineering/code-execution-with-mcp) | D2/D5 | S | [official-blog/03-code-execution-mcp-advanced-tool-use.md](official-blog/03-code-execution-mcp-advanced-tool-use.md) |
-| 4 | [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | D5 | S | [official-blog/04-context-engineering-and-management.md](official-blog/04-context-engineering-and-management.md) |
-| 5 | [How we built Claude Code auto mode](https://www.anthropic.com/engineering/claude-code-auto-mode) | D3/D5 | A | [official-blog/05-auto-mode-and-security.md](official-blog/05-auto-mode-and-security.md) |
-| 6 | [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) | D4/D5 | A | [official-blog/06-demystifying-evals.md](official-blog/06-demystifying-evals.md) |
-| 7 | [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | D1/D5/D3 | A/B | [official-blog/07-effective-harnesses-and-agent-skills.md](official-blog/07-effective-harnesses-and-agent-skills.md) |
+| 1 | [Building agents with the Claude Agent SDK](https://claude.com/blog/building-agents-with-the-claude-agent-sdk) | D1/D3/D5 | S | [official-blog/building-agents-with-sdk.md](official-blog/building-agents-with-sdk.md) |
+| 2 | [Writing effective tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | D2/D4 | S | [official-blog/writing-effective-tools.md](official-blog/writing-effective-tools.md) |
+| 3 | [Code execution with MCP: Building more efficient agents](https://www.anthropic.com/engineering/code-execution-with-mcp) | D2/D5 | S | [official-blog/code-execution-mcp-advanced-tool-use.md](official-blog/code-execution-mcp-advanced-tool-use.md) |
+| 4 | [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | D5 | S | [official-blog/context-engineering-and-management.md](official-blog/context-engineering-and-management.md) |
+| 5 | [How we built Claude Code auto mode](https://www.anthropic.com/engineering/claude-code-auto-mode) | D3/D5 | A | [official-blog/auto-mode-and-security.md](official-blog/auto-mode-and-security.md) |
+| 6 | [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) | D4/D5 | A | [official-blog/demystifying-evals.md](official-blog/demystifying-evals.md) |
+| 7 | [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | D1/D5/D3 | A/B | [official-blog/effective-harnesses-and-agent-skills.md](official-blog/effective-harnesses-and-agent-skills.md) |
 
 ---
 
-## ドメイン別タスクステートメント詳細（[公式 Exam Guide](_originals/CCA-F_Certification_Exam_Guide.pdf) より）
+## ドメイン別タスクステートメント詳細（[公式 Exam Guide](../exams/ccar-f/CCAR-F_Certification_Exam_Guide.md) より）
 
 ### D1: Agentic Architecture & Orchestration（27%）
 

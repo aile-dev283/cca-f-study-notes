@@ -1,5 +1,5 @@
-# CCA-F ブループリント: 5ドメイン × タスクステートメント網羅チェックリスト
-# 出典: cca-f/CCA-F_Certification_Exam_Guide.md（Domain 1〜5 の Task Statements）
+# CCAR-F ブループリント: 5ドメイン × タスクステートメント網羅チェックリスト
+# 出典: exams/ccar-f/CCAR-F_Certification_Exam_Guide.md（Domain 1〜5 の Task Statements）
 # 各ドメインの review_links はリポジトリ内の実ファイルパス。弱点復習で利用する。
 # 生成時は、出題が特定タスクステートメントに偏らないよう task_statements を巡回すること。
 
@@ -22,16 +22,16 @@ domains:
       - "単一のスーパーエージェントで全役割をこなす（専門サブエージェントに分けない）"
     review_links:
       blog:
-        - cca-f/official-blog/01-building-agents-with-sdk.md
-        - cca-f/official-blog/07-effective-harnesses-and-agent-skills.md
+        - study/official-blog/building-agents-with-sdk.md
+        - study/official-blog/effective-harnesses-and-agent-skills.md
       docs:
         - docs/agent-sdk__agent-loop.md
         - docs/agent-sdk__subagents.md
         - docs/sub-agents.md
         - docs/agent-sdk__sessions.md
       skilljar:
-        - cca-f/skilljar-courses/phase2-03-subagents-intro.md
-        - cca-f/skilljar-courses/phase1-03-building-with-api.md
+        - study/skilljar-courses/subagents-intro.md
+        - study/skilljar-courses/building-with-claude-api.md
 
   D2:
     name: Tool Design & MCP Integration
@@ -49,15 +49,15 @@ domains:
       - "標準統合に既存コミュニティ MCP があるのに自前実装する"
     review_links:
       blog:
-        - cca-f/official-blog/02-writing-effective-tools.md
-        - cca-f/official-blog/03-code-execution-mcp-advanced-tool-use.md
+        - study/official-blog/writing-effective-tools.md
+        - study/official-blog/code-execution-mcp-advanced-tool-use.md
       docs:
         - docs/agent-sdk__custom-tools.md
         - docs/mcp.md
         - docs/agent-sdk__mcp.md
       skilljar:
-        - cca-f/skilljar-courses/phase2-01-mcp-intro.md
-        - cca-f/skilljar-courses/phase2-02-mcp-advanced.md
+        - study/skilljar-courses/mcp-introduction.md
+        - study/skilljar-courses/mcp-advanced-topics.md
 
   D3:
     name: Claude Code Configuration & Workflows
@@ -76,8 +76,8 @@ domains:
       - "アーキ判断を伴う大規模変更を直接実行で始め、後から手戻りする"
     review_links:
       blog:
-        - cca-f/official-blog/05-auto-mode-and-security.md
-        - cca-f/official-blog/07-effective-harnesses-and-agent-skills.md
+        - study/official-blog/auto-mode-and-security.md
+        - study/official-blog/effective-harnesses-and-agent-skills.md
       docs:
         - docs/memory.md
         - docs/commands.md
@@ -88,9 +88,9 @@ domains:
         - docs/cli-reference.md
         - docs/github-actions.md
       skilljar:
-        - cca-f/skilljar-courses/phase3-01-claude-code-101.md
-        - cca-f/skilljar-courses/phase3-02-claude-code-action.md
-        - cca-f/skilljar-courses/phase3-03-agent-skills.md
+        - study/skilljar-courses/claude-code-101.md
+        - study/skilljar-courses/claude-code-in-action.md
+        - study/skilljar-courses/agent-skills-intro.md
 
   D4:
     name: Prompt Engineering & Structured Output
@@ -109,12 +109,12 @@ domains:
       - "生成と同一セッションで自己レビューさせ、独立インスタンスを使わない"
     review_links:
       blog:
-        - cca-f/official-blog/06-demystifying-evals.md
+        - study/official-blog/demystifying-evals.md
       docs:
         - docs/agent-sdk__structured-outputs.md
         - docs/cli-reference.md
       skilljar:
-        - cca-f/skilljar-courses/phase1-03-building-with-api.md
+        - study/skilljar-courses/building-with-claude-api.md
 
   D5:
     name: Context Management & Reliability
@@ -133,14 +133,14 @@ domains:
       - "矛盾する統計から根拠なく1つを選ぶ（出所注釈で両論併記しない）"
     review_links:
       blog:
-        - cca-f/official-blog/04-context-engineering-and-management.md
+        - study/official-blog/context-engineering-and-management.md
       docs:
         - docs/agent-sdk__sessions.md
         - docs/agent-sdk__session-storage.md
         - docs/common-workflows.md
       skilljar:
-        - cca-f/skilljar-courses/phase1-02-ai-fluency.md
-        - cca-f/skilljar-courses/phase1-03-building-with-api.md
+        - study/skilljar-courses/ai-fluency.md
+        - study/skilljar-courses/building-with-claude-api.md
 
 # 横断モードでのドメイン配分は weight に比例させる。端数は D1 に寄せる。
 # 例（20問）: D1=5, D3=4, D4=4, D2=4, D5=3

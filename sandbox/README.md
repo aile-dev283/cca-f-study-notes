@@ -1,6 +1,6 @@
-# CCA-F Sandbox
+# CCAR-F Sandbox
 
-CCA-F 試験対策の実習環境。Anthropic API・MCP・マルチエージェントの各シナリオを実際に動かす。
+CCAR-F 試験対策の実習環境。Anthropic API・MCP・マルチエージェントの各シナリオを実際に動かす。
 
 ## セットアップ（初回のみ）
 

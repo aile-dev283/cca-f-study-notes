@@ -1,26 +1,29 @@
-# CCA-F Study Notes
+# CCAR-F Study Notes
 
-CCA-F（Claude Certified Architect – Foundations）試験対策のノートをまとめたリポジトリ。
+**Claude Certified Architect – Foundations（CCAR-F）** 試験対策のノートをまとめたリポジトリ。
 
 [ericbuess/claude-code-docs](https://github.com/ericbuess/claude-code-docs) をベースに、Anthropic Skilljar コースのノートと公式ブログの試験対策まとめを追加したもの。
+
+> Anthropicの認定制度は2026年7月に単一の「CCA-F」から **CCAR-F**（Architect – Foundations）・**CCAR-P**（Architect – Professional）・**CCAO-F**（Associate – Foundations）・**CCDV-F**（Developer – Foundations）の4種類に分かれた。本リポジトリは従来どおり **CCAR-F** に特化している。他3種の参考PDFは [`exams/`](exams/README.md) に配置している。
 
 ---
 
 ## 試験概要
 
-**Claude Certified Architect – Foundations（CCA-F）**  
+**Claude Certified Architect – Foundations（CCAR-F）**  
 公式トップページ: <https://anthropic.skilljar.com/claude-certified-architect-foundations-access-request>
 
 | 項目 | 内容 |
 |------|------|
-| 対象 | Anthropicパートナー企業の技術者（〜301レベル） |
-| 形式 | 60問・4択・120分・プロクター監視（ProctorFree） |
-| 合格ライン | 1000点満点中720点（目安：Practice Exam で 900+/1000） |
-| 受験料 | $99（Claude Partner Network 加盟企業は割引あり） |
-| 結果通知 | 受験から2営業日以内（ドメイン別スコアレポート付き） |
-| 合格特典 | CCA-Fバッジ（LinkedIn共有可） |
-| 試験回数 | 1回のみ（再受験不可） |
-| 受験登録 | パートナー企業のメールアドレスが必要 |
+| 対象 | Claudeで本番システムを設計・実装するソリューションアーキテクト（実務経験6ヶ月以上目安） |
+| 形式 | 60問・multiple-choice / multiple-response混在・120分・Pearson VUE（オンライン監督 or テストセンター） |
+| 合格ライン | 1000点満点中720点 |
+| 受験料 | $125（Claude Partner Network 加盟企業は割引あり） |
+| 結果通知 | 受験直後（ドメイン別スコアレポート付き） |
+| 合格特典 | CCAR-Fバッジ（Credly・LinkedIn共有可） |
+| 有効期間 | 認定日から12ヶ月 |
+| 再受験 | 1回目不合格後14日、2回目後30日、3回目後90日。ローリング12ヶ月で最大4回 |
+| 受験登録 | パートナー企業のメールアドレスが必要（Anthropic Partner Academy経由） |
 
 **前提条件（公式）:**
 
@@ -84,13 +87,13 @@ CCA-F（Claude Certified Architect – Foundations）試験対策のノートを
   Claude を使って構造化データ抽出システムを構築する。システムは非構造化ドキュメントから情報を抽出し、JSON スキーマで出力を検証し、高い精度を維持する。エッジケースを適切に処理し、下流システムと統合できなければならない。  
   関連ドメイン: Prompt Engineering & Structured Output / Context Management & Reliability
 
-> 詳細は公式 Exam Guide の [Markdown 版](cca-f/CCA-F_Certification_Exam_Guide.md)（[原本 PDF](cca-f/_originals/CCA-F_Certification_Exam_Guide.pdf)・パートナー登録後にダウンロード可）を参照。
+> 詳細は公式 Exam Guide の [Markdown 版](exams/ccar-f/CCAR-F_Certification_Exam_Guide.md)（[原本 PDF](exams/ccar-f/_originals/CCAR-F_Certification_Exam_Guide.pdf)・パートナー登録後にダウンロード可）を参照。
 
 ---
 
 ## 学習コンテンツ
 
-詳細は **[`cca-f/`](cca-f/README.md)** を参照。
+詳細は **[`study/`](study/README.md)** を参照。Exam Guide や受験関連ドキュメントは **[`exams/`](exams/README.md)** を参照。
 
 | フェーズ | 内容 |
 |---------|------|
@@ -104,7 +107,7 @@ CCA-F（Claude Certified Architect – Foundations）試験対策のノートを
 
 ## 問題演習トレーナー（`cca-f-trainer` スキル）
 
-`.claude/skills/cca-f-trainer/` に、CCA-F の問題演習用 Claude Code スキルを同梱している。
+`.claude/skills/cca-f-trainer/` に、CCAR-F の問題演習用 Claude Code スキルを同梱している（スキル名は歴史的経緯で `cca-f-trainer` のまま）。
 このリポジトリのコーパス（Exam Guide・公式ブログ7本・Skilljarノート11本・docs 148本）に
 グラウンディングして**シナリオベースの単一正解問題**を生成・出題・採点する。
 
@@ -139,7 +142,7 @@ CCA-F（Claude Certified Architect – Foundations）試験対策のノートを
 
 3. **スキルを起動する**
   - チャット欄で `/cca-f-trainer` を実行する
-  - もしくは「CCA-F の模試を作って」「D2 集中で10問作成」「練習問題を解きたい」「弱点復習」など自然文で指示する
+  - もしくは「CCAR-F の模試を作って」「D2 集中で10問作成」「練習問題を解きたい」「弱点復習」など自然文で指示する
   - 起動時にまず **「問題を解く」/「問題を作成する」** を選ぶ（進行中の演習があれば自動で再開）
 
 4. **問題を作成する（初回・追加時）**
@@ -155,8 +158,8 @@ CCA-F（Claude Certified Architect – Foundations）試験対策のノートを
 
 - 問題バンク: `.claude/skills/cca-f-trainer/banks/<バンク名>/`（`manifest.json`・`quiz-questions.json`・`answer-key.json`）
   → **Git 管理対象**（チームで共有・再利用できる）
-- 演習レポート: `cca-f/reports/<YYYY-MM-DD>-session.md`
-- 弱点ログ: `cca-f/reports/weakness-log.json`
+- 演習レポート: `exams/ccar-f/reports/<YYYY-MM-DD>-session.md`
+- 弱点ログ: `exams/ccar-f/reports/weakness-log.json`
 - 出題ランの作業領域: `.claude/skills/cca-f-trainer/sessions/<日時>/`
 
 ※ レポート・弱点ログ・出題ランは個人の学習記録のため Git 管理対象外。問題バンクのみ共有用にコミットされる。
@@ -183,7 +186,7 @@ git merge upstream/main
 git push
 ```
 
-`cca-f/` は upstream に存在しないため、通常はコンフリクトしない。
+`study/` と `exams/` は upstream に存在しないため、通常はコンフリクトしない。
 
 ### `/docs` コマンドのインストール
 
@@ -210,4 +213,4 @@ curl -fsSL https://raw.githubusercontent.com/ericbuess/claude-code-docs/main/ins
 
 - `docs/` 内のドキュメントコンテンツは Anthropic に帰属
 - ミラーツール部分（install.sh など）は [ericbuess/claude-code-docs](https://github.com/ericbuess/claude-code-docs) に帰属
-- `cca-f/` の試験対策ノートは Anthropic Skilljar および Anthropic 公式ブログを出典とする
+- `study/`・`exams/` の試験対策ノートは Anthropic Skilljar・Anthropic 公式ブログ・Anthropic Certification Program Exam Guide を出典とする
