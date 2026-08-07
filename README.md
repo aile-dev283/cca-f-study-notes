@@ -87,7 +87,7 @@
   Claude を使って構造化データ抽出システムを構築する。システムは非構造化ドキュメントから情報を抽出し、JSON スキーマで出力を検証し、高い精度を維持する。エッジケースを適切に処理し、下流システムと統合できなければならない。  
   関連ドメイン: Prompt Engineering & Structured Output / Context Management & Reliability
 
-> 詳細は公式 Exam Guide の [Markdown 版](exams/ccar-f/CCAR-F_Certification_Exam_Guide.md)（[原本 PDF](exams/ccar-f/_originals/CCAR-F_Certification_Exam_Guide.pdf)・パートナー登録後にダウンロード可）を参照。
+> 詳細は公式 Exam Guide の [Markdown 版](exams/ccar-f/CCAR-F_Certification_Exam_Guide.md)（[日本語訳](exams/ccar-f/CCAR-F_Certification_Exam_Guide.ja.md)・[原本 PDF](exams/ccar-f/_originals/CCAR-F_Certification_Exam_Guide.pdf)（パートナー登録後にダウンロード可））を参照。
 
 ---
 
