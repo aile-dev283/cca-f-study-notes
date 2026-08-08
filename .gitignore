@@ -1,3 +1,17 @@
 
 # 一時作業ディレクトリ
 tmp
+
+# 公式Practice Exam等、著作権上リポジトリに含めない個人参照資料
+cca-f/_private/
+
+# macOS
+.DS_Store
+
+# 問題バンク・演習セッション・弱点ログは、誤答分析（＝個人の弱点）に基づいて
+# 生成される個人の学習記録のため Git 管理しない。フォルダだけ残す。
+.claude/skills/cca-f-trainer/banks/*
+!.claude/skills/cca-f-trainer/banks/.gitkeep
+!.claude/skills/cca-f-trainer/banks/README.md
+.claude/skills/cca-f-trainer/sessions/
+cca-f/reports/

@@ -78,5 +78,7 @@ CCAR-F 試験対策の問題演習トレーナー（スキル名は歴史的経�
 - `scenarios.yaml` — 6シナリオ原型。問題を包む文脈として必ず使う。**作成時に必読**。
 - `antipattern-playbook.md` — ディストラクタ素材（頻出トラップ＋各タスクのアンチパターン）。**作成時に必読**。
 - `question-schema.json` — JSON スキーマ（`bank_manifest`／`quiz_html_question`／`quiz_result`）。
-- `banks/` — **永続バンク（コミット対象）**。各バンク `banks/<name>/` に `manifest.json`・`quiz.html`。
+- `banks/` — **永続バンク（Git 管理対象外・ローカルのみ）**。各バンク `banks/<name>/` に `manifest.json`・`quiz.html`。
+  弱点ターゲット生成では誤答分析（＝個人の弱点）に基づいて出題が決まるため、演習結果と同じく個人の学習記録として扱う。
+  ただし**同一環境内では再利用・重複防止のために読み続ける**（既出セット・シナリオ被覆の集計対象）。
 - 結果ファイル: `exams/ccar-f/reports/quiz-results/<bank>-results-<timestamp>.json`（quiz.html からダウンロードして手動配置。gitignore 済み）。
