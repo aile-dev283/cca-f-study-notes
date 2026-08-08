@@ -3,3 +3,9 @@
 *
 !.gitignore
 !.gitkeep
+
+# quiz-results/ は「箱だけ」共有する。
+# 中身（演習結果 JSON）は個人記録なのでコミットせず、README だけ追跡してクローン後もフォルダが存在するようにする。
+!quiz-results/
+quiz-results/*
+!quiz-results/README.md
