@@ -87,7 +87,7 @@
   Claude を使って構造化データ抽出システムを構築する。システムは非構造化ドキュメントから情報を抽出し、JSON スキーマで出力を検証し、高い精度を維持する。エッジケースを適切に処理し、下流システムと統合できなければならない。  
   関連ドメイン: Prompt Engineering & Structured Output / Context Management & Reliability
 
-> 詳細は公式 Exam Guide の [Markdown 版](exams/ccar-f/CCAR-F_Certification_Exam_Guide.md)（[原本 PDF](exams/ccar-f/_originals/CCAR-F_Certification_Exam_Guide.pdf)・パートナー登録後にダウンロード可）を参照。
+> 詳細は公式 Exam Guide の [Markdown 版](exams/ccar-f/CCAR-F_Certification_Exam_Guide.md)（[日本語訳](exams/ccar-f/CCAR-F_Certification_Exam_Guide.ja.md)・[原本 PDF](exams/ccar-f/_originals/CCAR-F_Certification_Exam_Guide.pdf)（パートナー登録後にダウンロード可））を参照。
 
 ---
 
@@ -157,10 +157,13 @@
 ### 出力先
 
 - 問題バンク: `.claude/skills/cca-f-trainer/banks/<バンク名>/`（`manifest.json`・`quiz.html`）
-  → **Git 管理対象**（チームで共有・再利用できる）
 - 演習結果: `exams/ccar-f/reports/quiz-results/<バンク名>-results-<タイムスタンプ>.json`（`quiz.html` からダウンロードして手動配置）
 
-※ 演習結果は個人の学習記録のため Git 管理対象外（`exams/ccar-f/reports/.gitignore`）。問題バンクのみ共有用にコミットされる。
+※ **問題バンク・演習結果はどちらも Git 管理対象外**。バンクは弱点ターゲット生成によって
+**誤答分析（＝個人の弱点）に基づいて出題内容が決まる**ため、演習結果と同じく個人の学習記録として扱う
+（`.gitignore` および `exams/ccar-f/reports/.gitignore`）。
+共有されるのはスキル本体（`SKILL.md`・`blueprint.yaml`・`scenarios.yaml`・`antipattern-playbook.md` など）だけで、
+バンクは各自の環境で生成する。
 
 ---
 
