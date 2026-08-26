@@ -267,8 +267,8 @@
     "changelog.md": {
       "original_url": "https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md",
       "original_raw_url": "https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md",
-      "hash": "bd1a4e4a89986d0e721579501d3b2f83862a0b19c9fcbc4cc33e4bb0c6c6f3bf",
-      "last_updated": "2026-08-25T06:27:06.946949",
+      "hash": "833907583235e134a65ed67b1350775d39a350315a3c2091dba8bf659f02d1fd",
+      "last_updated": "2026-08-26T00:35:55.087135",
       "source": "claude-code-repository"
     },
     "channels.md": {
@@ -418,8 +418,8 @@
     "costs.md": {
       "original_url": "https://code.claude.com/docs/en/costs",
       "original_md_url": "https://code.claude.com/docs/en/costs.md",
-      "hash": "f360b37cede6cc48230dad82dbb6dd8fcc9e59a76343518fcdda20317a5bf768",
-      "last_updated": "2026-08-25T03:38:51.820701"
+      "hash": "df3782e51e3ee54930ccd9c61866150985042616efd2acb66abd287037fd3200",
+      "last_updated": "2026-08-26T00:34:07.960027"
     },
     "cross-session-messaging.md": {
       "original_url": "https://code.claude.com/docs/en/cross-session-messaging",
@@ -568,8 +568,8 @@
     "goal.md": {
       "original_url": "https://code.claude.com/docs/en/goal",
       "original_md_url": "https://code.claude.com/docs/en/goal.md",
-      "hash": "e1b85023df2cc1e02c3d37b241b8c2618930421aa8e42278fd74ecff1b35ffd6",
-      "last_updated": "2026-08-22T03:33:24.535550"
+      "hash": "1a0bcf9a40c2228a9aa4e4a1571ba14b606b027b2f9ef404eb3deef31a8871b2",
+      "last_updated": "2026-08-26T00:34:27.353090"
     },
     "google-vertex-ai.md": {
       "original_url": "https://code.claude.com/docs/en/google-vertex-ai",
@@ -736,8 +736,8 @@
     "permissions.md": {
       "original_url": "https://code.claude.com/docs/en/permissions",
       "original_md_url": "https://code.claude.com/docs/en/permissions.md",
-      "hash": "4e38845956e078405ee411b496021df73e3a23c86f87f47ecd726549e2d50ed1",
-      "last_updated": "2026-08-25T18:25:36.851068"
+      "hash": "d0bdb132cc6668678a208ae038729b43ac23515c1b0a791951243092c06c729c",
+      "last_updated": "2026-08-26T00:34:54.413325"
     },
     "platforms.md": {
       "original_url": "https://code.claude.com/docs/en/platforms",
@@ -1149,8 +1149,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-08-25T21:18:07.242761",
-    "fetch_duration_seconds": 146.531063,
+    "last_fetch_completed": "2026-08-26T00:35:55.087180",
+    "fetch_duration_seconds": 168.700799,
     "total_pages_discovered": 191,
     "pages_fetched_successfully": 192,
     "pages_failed": 0,
@@ -1160,7 +1160,7 @@
     "total_files": 191,
     "fetch_tool_version": "3.0"
   },
-  "last_updated": "2026-08-25T21:18:07.242787",
+  "last_updated": "2026-08-26T00:35:55.087196",
   "base_url": "https://raw.githubusercontent.com/aile-dev283/cca-f-study-notes/main/docs/",
   "github_repository": "aile-dev283/cca-f-study-notes",
   "github_ref": "main",
