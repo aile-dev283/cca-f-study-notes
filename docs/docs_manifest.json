@@ -165,8 +165,8 @@
     "agent-sdk__subagents.md": {
       "original_url": "https://code.claude.com/docs/en/agent-sdk/subagents",
       "original_md_url": "https://code.claude.com/docs/en/agent-sdk/subagents.md",
-      "hash": "0f2e497a7ed516f81e702b3b7ed3aa6775a4e96119b25982fa6a2f10c184c902",
-      "last_updated": "2026-08-31T16:44:57.312725"
+      "hash": "74ec0f8f4f1690b1eebcb3879f0215ffa456d67995730e6bb35d0cfb81db5382",
+      "last_updated": "2026-09-01T02:20:18.969218"
     },
     "agent-sdk__todo-tracking.md": {
       "original_url": "https://code.claude.com/docs/en/agent-sdk/todo-tracking",
@@ -1149,8 +1149,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-08-31T22:10:22.805528",
-    "fetch_duration_seconds": 194.849154,
+    "last_fetch_completed": "2026-09-01T02:23:08.434006",
+    "fetch_duration_seconds": 199.112549,
     "total_pages_discovered": 191,
     "pages_fetched_successfully": 192,
     "pages_failed": 0,
@@ -1160,7 +1160,7 @@
     "total_files": 191,
     "fetch_tool_version": "3.0"
   },
-  "last_updated": "2026-08-31T22:10:22.805554",
+  "last_updated": "2026-09-01T02:23:08.434038",
   "base_url": "https://raw.githubusercontent.com/aile-dev283/cca-f-study-notes/main/docs/",
   "github_repository": "aile-dev283/cca-f-study-notes",
   "github_ref": "main",
