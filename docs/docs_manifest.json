@@ -448,8 +448,8 @@
     "desktop.md": {
       "original_url": "https://code.claude.com/docs/en/desktop",
       "original_md_url": "https://code.claude.com/docs/en/desktop.md",
-      "hash": "b8a6ef9c5dd76007afc525b06e2a1efe32e3cc000604f840bafe59492aa8f105",
-      "last_updated": "2026-09-13T22:42:51.397975"
+      "hash": "5c6c8360a3563a1150224187c55d6ceeb12d863748930bd6be7fca8246e87deb",
+      "last_updated": "2026-09-14T15:20:27.569608"
     },
     "desktop-ios-simulator.md": {
       "original_url": "https://code.claude.com/docs/en/desktop-ios-simulator",
@@ -1155,8 +1155,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-14T08:13:02.383256",
-    "fetch_duration_seconds": 136.118716,
+    "last_fetch_completed": "2026-09-14T15:21:49.613395",
+    "fetch_duration_seconds": 139.261875,
     "total_pages_discovered": 192,
     "pages_fetched_successfully": 193,
     "pages_failed": 0,
@@ -1166,7 +1166,7 @@
     "total_files": 192,
     "fetch_tool_version": "3.0"
   },
-  "last_updated": "2026-09-14T08:13:02.383290",
+  "last_updated": "2026-09-14T15:21:49.613432",
   "base_url": "https://raw.githubusercontent.com/aile-dev283/cca-f-study-notes/main/docs/",
   "github_repository": "aile-dev283/cca-f-study-notes",
   "github_ref": "main",
