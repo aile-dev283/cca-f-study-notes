@@ -117,8 +117,8 @@
     "agent-sdk__python.md": {
       "original_url": "https://code.claude.com/docs/en/agent-sdk/python",
       "original_md_url": "https://code.claude.com/docs/en/agent-sdk/python.md",
-      "hash": "89e5075f596f03bd6f4a011f44aef7d1ff4766f21533e60956ca6ffb0b8d34ee",
-      "last_updated": "2026-10-01T09:31:46.196290"
+      "hash": "1d28092277104fb1134a2c8b584b754b85713e39fdec4714a17bea0348c5be4c",
+      "last_updated": "2026-10-01T17:36:48.371173"
     },
     "agent-sdk__quickstart.md": {
       "original_url": "https://code.claude.com/docs/en/agent-sdk/quickstart",
@@ -195,8 +195,8 @@
     "agent-sdk__typescript.md": {
       "original_url": "https://code.claude.com/docs/en/agent-sdk/typescript",
       "original_md_url": "https://code.claude.com/docs/en/agent-sdk/typescript.md",
-      "hash": "695a0de1702947d9e741109465d121644aa79dd9f092a321ddbafb4dd679e1fa",
-      "last_updated": "2026-10-01T09:31:54.828324"
+      "hash": "82f74f9d573e961d6e41cab3653a2d16a2acc82a4068e618b2fea648071b0b72",
+      "last_updated": "2026-10-01T17:36:57.667128"
     },
     "agent-sdk__typescript-v2-preview.md": {
       "original_url": "https://code.claude.com/docs/en/agent-sdk/typescript-v2-preview",
@@ -466,8 +466,8 @@
     "desktop-linux.md": {
       "original_url": "https://code.claude.com/docs/en/desktop-linux",
       "original_md_url": "https://code.claude.com/docs/en/desktop-linux.md",
-      "hash": "f7bf024f7ce37928c102592ac8234ec52efda4b65f7981b42effb64f98e386e8",
-      "last_updated": "2026-09-29T17:09:26.623074"
+      "hash": "233ad12a2537e189d3205f16d022a9e90513adc96473e3599902eb1cc7cf8a8c",
+      "last_updated": "2026-10-01T17:37:28.590180"
     },
     "desktop-quickstart.md": {
       "original_url": "https://code.claude.com/docs/en/desktop-quickstart",
@@ -1257,8 +1257,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-01T09:33:51.696327",
-    "fetch_duration_seconds": 139.715643,
+    "last_fetch_completed": "2026-10-01T17:39:00.628571",
+    "fetch_duration_seconds": 147.269246,
     "total_pages_discovered": 209,
     "pages_fetched_successfully": 210,
     "pages_failed": 0,
@@ -1268,7 +1268,7 @@
     "total_files": 209,
     "fetch_tool_version": "3.0"
   },
-  "last_updated": "2026-10-01T09:33:51.696356",
+  "last_updated": "2026-10-01T17:39:00.628606",
   "base_url": "https://raw.githubusercontent.com/aile-dev283/cca-f-study-notes/main/docs/",
   "github_repository": "aile-dev283/cca-f-study-notes",
   "github_ref": "main",
