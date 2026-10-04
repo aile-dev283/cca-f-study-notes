@@ -1317,8 +1317,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-03T23:27:29.714366",
-    "fetch_duration_seconds": 150.729045,
+    "last_fetch_completed": "2026-10-04T03:10:17.218293",
+    "fetch_duration_seconds": 126.632766,
     "total_pages_discovered": 219,
     "pages_fetched_successfully": 220,
     "pages_failed": 0,
@@ -1328,7 +1328,7 @@
     "total_files": 219,
     "fetch_tool_version": "3.0"
   },
-  "last_updated": "2026-10-03T23:27:29.714387",
+  "last_updated": "2026-10-04T03:10:17.218325",
   "base_url": "https://raw.githubusercontent.com/aile-dev283/cca-f-study-notes/main/docs/",
   "github_repository": "aile-dev283/cca-f-study-notes",
   "github_ref": "main",
