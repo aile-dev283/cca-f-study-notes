@@ -892,8 +892,8 @@
     "plugins__mods__api.md": {
       "original_url": "https://code.claude.com/docs/en/plugins/mods/api",
       "original_md_url": "https://code.claude.com/docs/en/plugins/mods/api.md",
-      "hash": "22f65826477f6148930d6bac59c9f2e5ff2effadf7e4f53b9326309ecaeb252b",
-      "last_updated": "2026-10-25T17:57:32.746708"
+      "hash": "6b125c4bfc154487f551e8e0e1920d981f17a3ddbc3d05d17ffde3d1d09de9be",
+      "last_updated": "2026-10-29T17:42:47.446787"
     },
     "plugins__mods__create.md": {
       "original_url": "https://code.claude.com/docs/en/plugins/mods/create",
@@ -1365,8 +1365,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-29T11:54:57.358415",
-    "fetch_duration_seconds": 121.824663,
+    "last_fetch_completed": "2026-10-29T17:43:30.763685",
+    "fetch_duration_seconds": 125.900131,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 228,
     "pages_failed": 0,
@@ -1376,7 +1376,7 @@
     "total_files": 227,
     "fetch_tool_version": "3.0"
   },
-  "last_updated": "2026-10-29T11:54:57.358444",
+  "last_updated": "2026-10-29T17:43:30.763716",
   "base_url": "https://raw.githubusercontent.com/aile-dev283/cca-f-study-notes/main/docs/",
   "github_repository": "aile-dev283/cca-f-study-notes",
   "github_ref": "main",
