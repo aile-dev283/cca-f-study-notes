@@ -9,8 +9,8 @@
     "admin-setup.md": {
       "original_url": "https://code.claude.com/docs/en/admin-setup",
       "original_md_url": "https://code.claude.com/docs/en/admin-setup.md",
-      "hash": "ff258a7aa3b3f6e7cb72e4d47ba324719df61c3f6787a35934eeba5e0d37ec87",
-      "last_updated": "2026-11-17T05:28:46.172657"
+      "hash": "54a57c46a55cd83128f9ac39b2a9a5261c59b5a3c4e33642d81c5c354c2d4284",
+      "last_updated": "2026-11-18T10:49:17.450317"
     },
     "advisor.md": {
       "original_url": "https://code.claude.com/docs/en/advisor",
@@ -286,8 +286,8 @@
     "channels.md": {
       "original_url": "https://code.claude.com/docs/en/channels",
       "original_md_url": "https://code.claude.com/docs/en/channels.md",
-      "hash": "7a38c1b3e98789b34090b97891b798b0fbd6cf74ff11773be875820e18993c2f",
-      "last_updated": "2026-11-06T01:14:38.554732"
+      "hash": "027537644226c1592215c992c6091cc8bd333768c1e222c5ef036f0db126dd8b",
+      "last_updated": "2026-11-18T10:49:42.523778"
     },
     "channels-reference.md": {
       "original_url": "https://code.claude.com/docs/en/channels-reference",
@@ -508,8 +508,8 @@
     "desktop.md": {
       "original_url": "https://code.claude.com/docs/en/desktop",
       "original_md_url": "https://code.claude.com/docs/en/desktop.md",
-      "hash": "35b77248f3f513e476f979a6a86109b504604e0e74be08a29c16b7cd0d941033",
-      "last_updated": "2026-11-17T05:29:30.243881"
+      "hash": "bc0295df18527ebbe49c842536670f0859624991d6ed6be0b5475e982bc31816",
+      "last_updated": "2026-11-18T10:50:02.507364"
     },
     "desktop-ios-simulator.md": {
       "original_url": "https://code.claude.com/docs/en/desktop-ios-simulator",
@@ -1120,14 +1120,14 @@
     "settings-reference.md": {
       "original_url": "https://code.claude.com/docs/en/settings-reference",
       "original_md_url": "https://code.claude.com/docs/en/settings-reference.md",
-      "hash": "e21f35b55e3e99112b30ec19c0b426c4e86c87f05d9cd91566e6d0c46a9e0093",
-      "last_updated": "2026-11-18T00:08:01.813913"
+      "hash": "7b7b9dde44e60d9bea9d2072202e4e452cb3a34cd9adf9adbda6af4f838effbe",
+      "last_updated": "2026-11-18T10:50:57.778083"
     },
     "setup.md": {
       "original_url": "https://code.claude.com/docs/en/setup",
       "original_md_url": "https://code.claude.com/docs/en/setup.md",
-      "hash": "dc409d98be351f99616c9f19e8ea4d762b3f2925c56d6763615bf5e328502975",
-      "last_updated": "2026-11-17T05:30:24.963169"
+      "hash": "27ddc5d3a7664856523f8f2d98861ffe6f091f825fd233dcb2d24d8da2a38294",
+      "last_updated": "2026-11-18T10:50:58.335779"
     },
     "skills.md": {
       "original_url": "https://code.claude.com/docs/en/skills",
@@ -1227,8 +1227,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-18T00:08:11.401246",
-    "fetch_duration_seconds": 117.495828,
+    "last_fetch_completed": "2026-11-18T10:51:07.101391",
+    "fetch_duration_seconds": 110.421815,
     "total_pages_discovered": 204,
     "pages_fetched_successfully": 205,
     "pages_failed": 0,
@@ -1238,7 +1238,7 @@
     "total_files": 204,
     "fetch_tool_version": "3.0"
   },
-  "last_updated": "2026-11-18T00:08:11.401260",
+  "last_updated": "2026-11-18T10:51:07.101413",
   "base_url": "https://raw.githubusercontent.com/aile-dev283/cca-f-study-notes/main/docs/",
   "github_repository": "aile-dev283/cca-f-study-notes",
   "github_ref": "main",
